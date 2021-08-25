@@ -1,0 +1,102 @@
+[
+  {
+    "id": "1",
+    "category": "Sport",
+    "subcategory": "Dyscypliny"
+  },
+  {
+    "id": "2",
+    "category": "Sport",
+    "subcategory": "Zawodnik"
+  },
+  {
+    "id": "3",
+    "category": "Sport",
+    "subcategory": "Klub"
+  },
+  {
+    "id": "4",
+    "category": "Sport",
+    "subcategory": "Turniej"
+  },
+  {
+    "id": "5",
+    "category": "Sport",
+    "subcategory": "Piłkarz"
+  },
+  {
+    "id": "6",
+    "category": "Geografia",
+    "subcategory": "Kraj"
+  },
+  {
+    "id": "7",
+    "category": "Geografia",
+    "subcategory": "Miejsca"
+  },
+  {
+    "id": "8",
+    "category": "Geografia",
+    "subcategory": "Regiony"
+  },
+  {
+    "id": "9",
+    "category": "Geografia",
+    "subcategory": "Ludność"
+  },
+  {
+    "id": "10",
+    "category": "Geografia",
+    "subcategory": "Kosmos"
+  },
+  {
+    "id": "11",
+    "category": "Przyroda",
+    "subcategory": "Roślina"
+  },
+  {
+    "id": "12",
+    "category": "Przyroda",
+    "subcategory": "Owoc"
+  },
+  {
+    "id": "13",
+    "category": "Przyroda",
+    "subcategory": "Warzywo"
+  },
+  {
+    "id": "14",
+    "category": "Przyroda",
+    "subcategory": "Zwierzęta"
+  },
+  {
+    "id": "15",
+    "category": "Przyroda",
+    "subcategory": "Miejsca"
+  },
+  {
+    "id": "16",
+    "category": "Rozgrywka",
+    "subcategory": "Filmy i seriale"
+  },
+  {
+    "id": "17",
+    "category": "Rozgrywka",
+    "subcategory": "Aktorzy"
+  },
+  {
+    "id": "18",
+    "category": "Rozgrywka",
+    "subcategory": "Piosenkarze"
+  },
+  {
+    "id": "19",
+    "category": "Rozgrywka",
+    "subcategory": "Piosenki"
+  },
+  {
+    "id": "20",
+    "category": "Rozgrywka",
+    "subcategory": "Gry"
+  }
+]

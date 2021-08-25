@@ -1,5 +1,6 @@
 import CategoryBox from 'components/CategoryBox';
 import type { NextPage } from 'next';
+import categories from 'data/categories.json';
 
 const Home: NextPage = () => {
   return (
@@ -12,8 +13,9 @@ const Home: NextPage = () => {
       <main className="w-full">
         <section className="m-2">Wybierz kategorie:</section>
         <section className="w-full flex flex-col">
-          <CategoryBox category="Geography" />
-          <CategoryBox category="Sport" />
+          {categories.map((category) => (
+            <CategoryBox key={category.id} category={category.category} />
+          ))}
         </section>
       </main>
     </div>

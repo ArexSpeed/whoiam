@@ -1,0 +1,42 @@
+[
+  {
+    "id": "1",
+    "category": "Sport"
+  },
+  {
+    "id": "2",
+    "category": "Geografia"
+  },
+  {
+    "id": "3",
+    "category": "Przyroda"
+  },
+  {
+    "id": "4",
+    "category": "Rozrywka"
+  },
+  {
+    "id": "5",
+    "category": "Historia"
+  },
+  {
+    "id": "6",
+    "category": "Życie codzienne"
+  },
+  {
+    "id": "7",
+    "category": "Firmy"
+  },
+  {
+    "id": "8",
+    "category": "Fantasy"
+  },
+  {
+    "id": "9",
+    "category": "Szkoła"
+  },
+  {
+    "id": "10",
+    "category": "Technologia"
+  }
+]

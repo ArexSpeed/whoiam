@@ -4,7 +4,7 @@ import Question from 'components/Question';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { setQuestion, selectedQuestions } from 'redux/slice';
+import { setQuestion, selectedQuestions, reset } from 'redux/slice';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -39,6 +39,12 @@ const Questions = () => {
     setModalQuestion('');
     setModalAnswer('');
     setOpenModal(false);
+  };
+
+  const handleReset = () => {
+    dispatch(reset());
+    setModalQuestion('');
+    setModalAnswer('');
   };
 
   return (
@@ -124,22 +130,26 @@ const Questions = () => {
           </div>
           <span className="text-sm">Dodaj pytanie</span>
         </button>
-        <button className="bg-transparent flex flex-col justify-center items-center w-1/3">
-          <div className="flex justify-center items-center w-[50px] h-[50px] rounded-full bg-red-400">
-            <svg
-              className="w-8 h-8"
-              fill="white"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                fillRule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <span className="text-sm">Koniec gry</span>
-        </button>
+        <Link href="/" passHref>
+          <button
+            className="bg-transparent flex flex-col justify-center items-center w-1/3"
+            onClick={handleReset}>
+            <div className="flex justify-center items-center w-[50px] h-[50px] rounded-full bg-red-400">
+              <svg
+                className="w-8 h-8"
+                fill="white"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <span className="text-sm">Koniec gry</span>
+          </button>
+        </Link>
       </footer>
     </div>
   );
