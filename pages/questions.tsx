@@ -1,51 +1,111 @@
+import { useState } from 'react';
+import Link from 'next/link';
 import Question from 'components/Question';
-import React from 'react';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+
+type QuestionType = {
+  question: string;
+  answer: string;
+};
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  })
+);
 
 const Questions = () => {
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [modalQuestion, setModalQuestion] = useState('');
+  const [modalAnswer, setModalAnswer] = useState('');
+  const classes = useStyles();
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+  const saveQuestion = () => {
+    setQuestions((prev) => [...prev, { question: modalQuestion, answer: modalAnswer }]);
+    setModalQuestion('');
+    setModalAnswer('');
+    setOpenModal(false);
+  };
+
   return (
     <div className="w-screen h-screen min-h-screen bg-primary flex flex-col relative font-poppins overflow-hidden">
       <header className="w-full text-center text-sm h-[20px] flex-none mt-2">Sport - Kluby</header>
       <main className="w-full flex-grow">
         <section className="m-2">Pytania:</section>
         <section className="w-full flex flex-col max-h-80 overflow-scroll">
-          <Question question="Czy jestem z Europy" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question question="Czy mam zielone oczy z czerwonymi zrenicami" answer="Tak" />
-          <Question
-            question="Czy mam zielone oczy z czerwonymi zrenicami i kolorowymi kredkami pod oczami z rozowa torebka"
-            answer="Nie"
-          />
+          {questions.map((q, i) => (
+            <Question key={i} question={q.question} answer={q.answer} />
+          ))}
+
+          <Modal open={openModal} onClose={handleCloseModal} className={classes.modal}>
+            <div className="flex flex-col justify-around items-center w-full h-auto m-2 p-2 bg-primary text-black rounded-md">
+              <h2>Pytanie</h2>
+              <input
+                type="text"
+                className="p-2 m-2 w-full bg-white rounded-sm"
+                placeholder="Napisz pytanie"
+                value={modalQuestion}
+                onChange={(e) => setModalQuestion(e.target.value)}
+              />
+              <h2>Odpowiedź</h2>
+              <div className="flex flex-row justify-center items-center w-full m-2">
+                <button
+                  className={`${
+                    modalAnswer === 'Tak' ? 'bg-opacity-100' : 'bg-opacity-50'
+                  } bg-green-500 h-[30px] w-[60px] mx-2 text-white flex justify-center items-center rounded-sm`}
+                  onClick={() => setModalAnswer('Tak')}>
+                  TAK
+                </button>
+                <button
+                  className={`${
+                    modalAnswer === 'Nie' ? 'bg-opacity-100' : 'bg-opacity-50'
+                  } bg-red-500 h-[30px] w-[60px] mx-2 text-white flex justify-center items-center rounded-sm`}
+                  onClick={() => setModalAnswer('Nie')}>
+                  NIE
+                </button>
+              </div>
+              <button
+                className="p-2 m-2 items-center bg-blue-500 text-white outline-none rounded-sm"
+                onClick={saveQuestion}>
+                ZAPISZ
+              </button>
+            </div>
+          </Modal>
         </section>
       </main>
       <footer className="flex flex-row w-full h-[100px] justify-between items-center">
-        <button className="bg-transparent flex flex-col justify-center items-center w-1/3">
-          <div className="flex justify-center items-center w-[50px] h-[50px] rounded-full bg-blue-500">
-            <svg
-              className="w-8 h-8"
-              fill="white"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                fillRule="evenodd"
-                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <span className="text-sm">Pokaż słowo</span>
-        </button>
-        <button className="bg-transparent flex flex-col justify-center items-center w-1/3">
+        <Link href="/play" passHref>
+          <button className="bg-transparent flex flex-col justify-center items-center w-1/3">
+            <div className="flex justify-center items-center w-[50px] h-[50px] rounded-full bg-blue-500">
+              <svg
+                className="w-8 h-8"
+                fill="white"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fillRule="evenodd"
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <span className="text-sm">Pokaż słowo</span>
+          </button>
+        </Link>
+        <button
+          className="bg-transparent flex flex-col justify-center items-center w-1/3"
+          onClick={handleOpenModal}>
           <div className="flex justify-center items-center w-[50px] h-[50px] rounded-full bg-green-500">
             <svg
               className="w-8 h-8"
