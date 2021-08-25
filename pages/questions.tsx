@@ -3,11 +3,8 @@ import Link from 'next/link';
 import Question from 'components/Question';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-
-type QuestionType = {
-  question: string;
-  answer: string;
-};
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { setQuestion, selectedQuestions } from 'redux/slice';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -20,10 +17,11 @@ const useStyles = makeStyles(() =>
 );
 
 const Questions = () => {
-  const [questions, setQuestions] = useState<QuestionType[]>([]);
+  const questions = useAppSelector(selectedQuestions);
   const [openModal, setOpenModal] = useState(false);
   const [modalQuestion, setModalQuestion] = useState('');
   const [modalAnswer, setModalAnswer] = useState('');
+  const dispatch = useAppDispatch();
   const classes = useStyles();
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -32,7 +30,12 @@ const Questions = () => {
     setOpenModal(false);
   };
   const saveQuestion = () => {
-    setQuestions((prev) => [...prev, { question: modalQuestion, answer: modalAnswer }]);
+    dispatch(
+      setQuestion({
+        question: modalQuestion,
+        answer: modalAnswer
+      })
+    );
     setModalQuestion('');
     setModalAnswer('');
     setOpenModal(false);

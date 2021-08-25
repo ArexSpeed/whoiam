@@ -12,8 +12,8 @@ const Home: NextPage = () => {
       <main className="w-full">
         <section className="m-2">Wybierz kategorie:</section>
         <section className="w-full flex flex-col">
-          <CategoryBox title="Geography" />
-          <CategoryBox title="Sport" />
+          <CategoryBox category="Geography" />
+          <CategoryBox category="Sport" />
         </section>
       </main>
     </div>
