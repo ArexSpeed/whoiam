@@ -1,42 +1,42 @@
 [
   {
-    "id": "1",
+    "catId": "10",
     "category": "Sport"
   },
   {
-    "id": "2",
+    "catId": "20",
     "category": "Geografia"
   },
   {
-    "id": "3",
+    "catId": "30",
     "category": "Przyroda"
   },
   {
-    "id": "4",
+    "catId": "40",
     "category": "Rozrywka"
   },
   {
-    "id": "5",
+    "catId": "50",
     "category": "Historia"
   },
   {
-    "id": "6",
+    "catId": "60",
     "category": "Życie codzienne"
   },
   {
-    "id": "7",
+    "catId": "70",
     "category": "Firmy"
   },
   {
-    "id": "8",
+    "catId": "80",
     "category": "Fantasy"
   },
   {
-    "id": "9",
+    "catId": "90",
     "category": "Szkoła"
   },
   {
-    "id": "10",
+    "catId": "100",
     "category": "Technologia"
   }
 ]

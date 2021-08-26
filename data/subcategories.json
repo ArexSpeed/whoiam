@@ -1,101 +1,101 @@
 [
   {
-    "id": "1",
+    "subId": "11",
     "category": "Sport",
     "subcategory": "Dyscypliny"
   },
   {
-    "id": "2",
+    "subId": "12",
     "category": "Sport",
     "subcategory": "Zawodnik"
   },
   {
-    "id": "3",
+    "subId": "13",
     "category": "Sport",
     "subcategory": "Klub"
   },
   {
-    "id": "4",
+    "subId": "14",
     "category": "Sport",
     "subcategory": "Turniej"
   },
   {
-    "id": "5",
+    "subId": "15",
     "category": "Sport",
     "subcategory": "Piłkarz"
   },
   {
-    "id": "6",
+    "subId": "21",
     "category": "Geografia",
     "subcategory": "Kraj"
   },
   {
-    "id": "7",
+    "subId": "22",
     "category": "Geografia",
     "subcategory": "Miejsca"
   },
   {
-    "id": "8",
+    "subId": "23",
     "category": "Geografia",
     "subcategory": "Regiony"
   },
   {
-    "id": "9",
+    "subId": "24",
     "category": "Geografia",
     "subcategory": "Ludność"
   },
   {
-    "id": "10",
+    "subId": "25",
     "category": "Geografia",
     "subcategory": "Kosmos"
   },
   {
-    "id": "11",
+    "subId": "31",
     "category": "Przyroda",
     "subcategory": "Roślina"
   },
   {
-    "id": "12",
+    "subId": "32",
     "category": "Przyroda",
     "subcategory": "Owoc"
   },
   {
-    "id": "13",
+    "subId": "33",
     "category": "Przyroda",
     "subcategory": "Warzywo"
   },
   {
-    "id": "14",
+    "subId": "34",
     "category": "Przyroda",
     "subcategory": "Zwierzęta"
   },
   {
-    "id": "15",
+    "subId": "35",
     "category": "Przyroda",
     "subcategory": "Miejsca"
   },
   {
-    "id": "16",
+    "subId": "41",
     "category": "Rozgrywka",
     "subcategory": "Filmy i seriale"
   },
   {
-    "id": "17",
+    "subId": "42",
     "category": "Rozgrywka",
     "subcategory": "Aktorzy"
   },
   {
-    "id": "18",
+    "subId": "43",
     "category": "Rozgrywka",
     "subcategory": "Piosenkarze"
   },
   {
-    "id": "19",
+    "subId": "44",
     "category": "Rozgrywka",
     "subcategory": "Piosenki"
   },
   {
-    "id": "20",
+    "subId": "45",
     "category": "Rozgrywka",
     "subcategory": "Gry"
   }

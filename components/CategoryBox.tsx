@@ -1,8 +1,9 @@
 import { FC, useState } from 'react';
 import Link from 'next/link';
 import { useAppDispatch } from 'redux/hooks';
-import { setCategory } from 'redux/slice';
+import { setCategory, setWord } from 'redux/slice';
 import subcategories from 'data/subcategories.json';
+import words from 'data/words.json';
 import Icon from './Icon';
 
 interface Props {
@@ -12,19 +13,30 @@ interface Props {
 const CategoryBox: FC<Props> = ({ category }) => {
   const [active, setActive] = useState(false);
   const [subcategory, setSubcategory] = useState('');
+  const [subId, setSubId] = useState('');
   const dispatch = useAppDispatch();
 
   const handleSubcategory = (e: { target: HTMLInputElement | any }) => {
     setSubcategory(e.target.value);
+    setSubId(e.target.id);
   };
 
   const handleStart = () => {
     dispatch(
       setCategory({
         category,
-        subcategory
+        subcategory,
+        subId
       })
     );
+    drawWord();
+  };
+
+  const drawWord = async () => {
+    const wds = await words.filter((word) => word.subId === subId);
+    const rand = Math.floor(Math.random() * wds.length);
+    const randWord = wds[rand].word;
+    dispatch(setWord(randWord));
   };
 
   return (
@@ -45,18 +57,18 @@ const CategoryBox: FC<Props> = ({ category }) => {
               .filter((sub) => sub.category === category)
               .map((item) => (
                 <div
-                  key={item.id}
+                  key={item.subId}
                   className={`${
                     subcategory === item.subcategory && 'border border-green-500'
                   } p-1 m-2 bg-primary rounded-full`}>
                   <input
                     type="radio"
                     name={category}
-                    id={item.subcategory}
+                    id={item.subId}
                     value={item.subcategory}
                     onClick={handleSubcategory}
                   />
-                  <label htmlFor={item.subcategory}>
+                  <label htmlFor={item.subId}>
                     <span className="mx-2">{item.subcategory}</span>
                   </label>
                 </div>

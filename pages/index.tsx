@@ -14,7 +14,7 @@ const Home: NextPage = () => {
         <section className="m-2">Wybierz kategorie:</section>
         <section className="w-full flex flex-col">
           {categories.map((category) => (
-            <CategoryBox key={category.id} category={category.category} />
+            <CategoryBox key={category.catId} category={category.category} />
           ))}
         </section>
       </main>
