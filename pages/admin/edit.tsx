@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import words from 'data/words.json';
+import { useAppSelector } from 'redux/hooks';
+import { adminCategory } from 'redux/slices/adminSlice';
 
 const EditPage = () => {
+  const category = useAppSelector(adminCategory);
   return (
-    <div className="w-screen min-h-screen bg-primary flex flex-col relative font-poppins">
+    <div className="w-screen min-h-screen bg-green-100 flex flex-col relative font-poppins">
       <header className="w-full text-center text-sm h-[20px] flex-none mt-2">
-        Edit Sport - Dyscypliny
+        Edit {category.category} - {category.subcategory}
       </header>
       <main className="w-full">
         <Link href="/admin" passHref>
@@ -27,7 +30,7 @@ const EditPage = () => {
 
         <section className="flex flex-col h-auto items-center m-2 bg-white text-black rounded-lg shadow-sm">
           <p className="text-md">
-            Sport - Dyscypliny <span className="text-xs">(20)</span>
+            {category.category} - {category.subcategory} <span className="text-xs">(20)</span>
           </p>
 
           {words

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAppSelector } from 'redux/hooks';
-import { selectedCategory, selectedSubcategory, selectedWord } from 'redux/slice';
+import { selectedCategory, selectedSubcategory, selectedWord } from 'redux/slices/gameSlice';
 
 const Play = () => {
   const category = useAppSelector(selectedCategory);

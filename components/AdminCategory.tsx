@@ -3,6 +3,8 @@ import Link from 'next/link';
 import subcategories from 'data/subcategories.json';
 import words from 'data/words.json';
 import Icon from './Icon';
+import { useAppDispatch } from 'redux/hooks';
+import { setCategory } from 'redux/slices/adminSlice';
 
 interface Props {
   category: string;
@@ -10,6 +12,11 @@ interface Props {
 
 const AdminCategory: FC<Props> = ({ category }) => {
   const [active, setActive] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const selectCategory = (subcategory: string, subId: string) => {
+    dispatch(setCategory({ category, subcategory, subId }));
+  };
 
   return (
     <div className="flex flex-col h-auto items-center m-2 bg-white text-black rounded-lg shadow-sm">
@@ -36,7 +43,9 @@ const AdminCategory: FC<Props> = ({ category }) => {
                   </p>
                   <div className="flex flex-row justify-around items-center">
                     <Link href="/admin/add" passHref>
-                      <button className="p-2 rounded-full" onClick={() => console.log('add')}>
+                      <button
+                        className="p-2 rounded-full"
+                        onClick={() => selectCategory(item.subcategory, item.subId)}>
                         <svg
                           className="w-6 h-6"
                           fill="currentColor"
@@ -51,13 +60,20 @@ const AdminCategory: FC<Props> = ({ category }) => {
                       </button>
                     </Link>
                     <Link href="/admin/edit" passHref>
-                      <button className="p-2 rounded-full" onClick={() => console.log('edit')}>
+                      <button
+                        className="p-2 rounded-full"
+                        onClick={() => selectCategory(item.subcategory, item.subId)}>
                         <svg
                           className="w-6 h-6"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                           xmlns="http://www.w3.org/2000/svg">
-                          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                          <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                          <path
+                            fillRule="evenodd"
+                            d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                       </button>
                     </Link>

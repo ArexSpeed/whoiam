@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import Link from 'next/link';
 import { useAppDispatch } from 'redux/hooks';
-import { setCategory, setWord } from 'redux/slice';
+import { setCategory, setWord } from 'redux/slices/gameSlice';
 import subcategories from 'data/subcategories.json';
 import words from 'data/words.json';
 import Icon from './Icon';

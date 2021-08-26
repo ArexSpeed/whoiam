@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from './store';
+import type { RootState } from '../store';
 
 type Question = {
   question: string;
@@ -28,8 +28,8 @@ const initialState: State = {
   questions: []
 };
 
-export const slice = createSlice({
-  name: 'slice',
+export const gameSlice = createSlice({
+  name: 'game',
   initialState,
   reducers: {
     setCategory: (state, action: PayloadAction<Category>) => {
@@ -53,12 +53,12 @@ export const slice = createSlice({
   }
 });
 
-export const { setCategory, setWord, setQuestion, reset } = slice.actions;
+export const { setCategory, setWord, setQuestion, reset } = gameSlice.actions;
 
-export const selectedCategory = (state: RootState) => state.slice.category;
-export const selectedSubcategory = (state: RootState) => state.slice.subcategory;
-export const selectedSubId = (state: RootState) => state.slice.subId;
-export const selectedWord = (state: RootState) => state.slice.word;
-export const selectedQuestions = (state: RootState) => state.slice.questions;
+export const selectedCategory = (state: RootState) => state.game.category;
+export const selectedSubcategory = (state: RootState) => state.game.subcategory;
+export const selectedSubId = (state: RootState) => state.game.subId;
+export const selectedWord = (state: RootState) => state.game.word;
+export const selectedQuestions = (state: RootState) => state.game.questions;
 
-export default slice.reducer;
+export default gameSlice.reducer;

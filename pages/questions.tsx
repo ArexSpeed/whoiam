@@ -10,7 +10,7 @@ import {
   selectedCategory,
   selectedSubcategory,
   reset
-} from 'redux/slice';
+} from 'redux/slices/gameSlice';
 
 const useStyles = makeStyles(() =>
   createStyles({
