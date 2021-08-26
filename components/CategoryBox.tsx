@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
 import Link from 'next/link';
-import { useAppDispatch } from 'redux/hooks';
-import { setCategory, setWord } from 'redux/slices/gameSlice';
-import subcategories from 'data/subcategories.json';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { setCategory, setWord, allSubcategories } from 'redux/slices/gameSlice';
+//import subcategories from 'data/subcategories.json';
 import words from 'data/words.json';
 import Icon from './Icon';
 
@@ -11,6 +11,7 @@ interface Props {
 }
 
 const CategoryBox: FC<Props> = ({ category }) => {
+  const subcategories = useAppSelector(allSubcategories);
   const [active, setActive] = useState(false);
   const [subcategory, setSubcategory] = useState('');
   const [subId, setSubId] = useState('');

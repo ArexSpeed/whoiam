@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 
+type Subcategories = {
+  subId: string,
+  category: string,
+  subcategory: string
+}
+
 type Question = {
   question: string;
   answer: string;
@@ -13,6 +19,7 @@ type Category = {
 };
 
 interface State {
+  subcategories: Subcategories[];
   category: string;
   subcategory: string;
   subId: string;
@@ -21,6 +28,7 @@ interface State {
 }
 
 const initialState: State = {
+  subcategories: [],
   category: '',
   subcategory: '',
   subId: '',
@@ -32,6 +40,9 @@ export const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
+    setSubcategories: (state, action: PayloadAction<Subcategories[]>) => {
+      state.subcategories = action.payload
+    },
     setCategory: (state, action: PayloadAction<Category>) => {
       state.category = action.payload.category;
       state.subcategory = action.payload.subcategory;
@@ -53,8 +64,9 @@ export const gameSlice = createSlice({
   }
 });
 
-export const { setCategory, setWord, setQuestion, reset } = gameSlice.actions;
+export const { setSubcategories, setCategory, setWord, setQuestion, reset } = gameSlice.actions;
 
+export const allSubcategories = (state: RootState) => state.game.subcategories;
 export const selectedCategory = (state: RootState) => state.game.category;
 export const selectedSubcategory = (state: RootState) => state.game.subcategory;
 export const selectedSubId = (state: RootState) => state.game.subId;

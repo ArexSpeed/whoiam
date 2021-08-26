@@ -1,8 +1,41 @@
+import { useEffect } from 'react';
 import CategoryBox from 'components/CategoryBox';
+import { useAppDispatch } from 'redux/hooks';
 import type { NextPage } from 'next';
-import categories from 'data/categories.json';
+import { getCategories, getSubcategories } from 'services/categories';
+import { setSubcategories } from 'redux/slices/gameSlice';
 
-const Home: NextPage = () => {
+type Categories = {
+  catId: string,
+  category: string
+}
+type Subcategories = {
+  subId: string,
+  category: string,
+  subcategory: string
+}
+interface Props {
+  categories: Categories[];
+  subcategories: Subcategories[];
+}
+
+export const getServerSideProps = async () => {
+  const categories = await getCategories();
+  const subcategories = await getSubcategories();
+
+  return {
+    props: {
+      categories,
+      subcategories
+    }
+  };
+};
+
+const Home: NextPage<Props> = ({ categories, subcategories }) => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(setSubcategories(subcategories))
+  }, [subcategories]);
   return (
     <div className="w-screen h-screen min-h-screen bg-primary flex flex-col relative font-poppins">
       <header className="w-full flex justify-end">
@@ -13,7 +46,7 @@ const Home: NextPage = () => {
       <main className="w-full">
         <section className="m-2">Wybierz kategorie:</section>
         <section className="w-full flex flex-col">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <CategoryBox key={category.catId} category={category.category} />
           ))}
         </section>
