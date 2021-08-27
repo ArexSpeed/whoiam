@@ -29,7 +29,7 @@ const AdminPage: NextPage<Props>  = ({ categories, subcategories }) => {
         <section className="m-2">Categories:</section>
         <section className="w-full flex flex-col">
           {categories?.map((category) => (
-            <AdminCategory key={category.catId} category={category.category} />
+            <AdminCategory key={category.catId} category={category.category} subcategories={subcategories} />
           ))}
         </section>
       </main>
