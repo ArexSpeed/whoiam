@@ -1,10 +1,33 @@
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import words from 'data/words.json';
+//import words from 'data/words.json';
 import { useAppSelector } from 'redux/hooks';
 import { adminCategory } from 'redux/slices/adminSlice';
 
+type Words = {
+  _id: string;
+  value: string;
+  subId: string;
+}
+
 const EditPage = () => {
   const category = useAppSelector(adminCategory);
+  const [words, setWords] = useState<Words[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await fetch(`/api/words?subId=${category.subId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json());
+      console.log(data, 'data in async')
+      setWords(data);
+    })();
+  }, [adminCategory])
+
   return (
     <div className="w-screen min-h-screen bg-green-100 flex flex-col relative font-poppins">
       <header className="w-full text-center text-sm h-[20px] flex-none mt-2">
@@ -30,16 +53,15 @@ const EditPage = () => {
 
         <section className="flex flex-col h-auto items-center m-2 bg-white text-black rounded-lg shadow-sm">
           <p className="text-md">
-            {category.category} - {category.subcategory} <span className="text-xs">(20)</span>
+            {category.category} - {category.subcategory} <span className="text-xs">({words?.length})</span>
           </p>
 
           {words
-            .filter((word) => word.subId === '11')
-            .map((item, i) => (
+            ?.map((item, i) => (
               <div
                 key={i}
                 className="flex flex-row w-full justify-between items-center p-2 border-b-2 border-blue-500 border-opacity-20">
-                <p className="text-sm">{item.word}</p>
+                <p className="text-sm">{item.value}</p>
                 <div className="flex flex-row justify-around items-center">
                   <button className="p-2 rounded-full" onClick={() => console.log('edit')}>
                     <svg

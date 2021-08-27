@@ -1,8 +1,7 @@
 import { FC, useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setCategory, setWord, allSubcategories } from 'redux/slices/gameSlice';
-import words from 'data/words.json';
 import Icon from './Icon';
 
 interface Props {
@@ -15,6 +14,7 @@ const CategoryBox: FC<Props> = ({ category }) => {
   const [subcategory, setSubcategory] = useState('');
   const [subId, setSubId] = useState('');
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const handleSubcategory = (e: { target: HTMLInputElement | any }) => {
     setSubcategory(e.target.value);
@@ -33,10 +33,18 @@ const CategoryBox: FC<Props> = ({ category }) => {
   };
 
   const drawWord = async () => {
-    const wds = await words.filter((word) => word.subId === subId);
-    const rand = Math.floor(Math.random() * wds.length);
-    const randWord = wds[rand].word;
+    const words = await fetch(`/api/words?subId=${subId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json());
+
+    const rand = Math.floor(Math.random() * words.length);
+    const randWord = words[rand].value;
     dispatch(setWord(randWord));
+    router.push('/play');
   };
 
   return (
@@ -75,11 +83,9 @@ const CategoryBox: FC<Props> = ({ category }) => {
               ))}
           </section>
           <section>
-            <Link href="/play" passHref>
-              <button className="p-2 m-2 bg-green-500 rounded-md" onClick={handleStart}>
-                START
-              </button>
-            </Link>
+            <button className="p-2 m-2 bg-green-500 rounded-md" onClick={handleStart}>
+              START
+            </button>
           </section>
         </div>
       )}
