@@ -3,16 +3,39 @@ import Link from 'next/link';
 //import words from 'data/words.json';
 import { useAppSelector } from 'redux/hooks';
 import { adminCategory } from 'redux/slices/adminSlice';
+import Modal from '@material-ui/core/Modal';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 type Words = {
   _id: string;
   value: string;
   subId: string;
-}
+};
+type Modal = 'edit' | 'delete';
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  })
+);
 
 const EditPage = () => {
   const category = useAppSelector(adminCategory);
   const [words, setWords] = useState<Words[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const classes = useStyles();
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [editValue, setEditValue] = useState({
+    id: '',
+    value: ''
+  });
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -21,12 +44,95 @@ const EditPage = () => {
         headers: {
           'Content-Type': 'application/json'
         }
-      })
-      .then(response => response.json());
-      console.log(data, 'data in async')
+      }).then((response) => response.json());
+      console.log(data, 'data in async');
       setWords(data);
+      setIsLoaded(true);
     })();
-  }, [adminCategory])
+    console.log('effect');
+    return setIsUpdated(false);
+  }, [adminCategory, isUpdated]);
+
+  // Modals
+  const handleOpenModal = (modal: Modal) => {
+    console.log(modal, 'modal');
+    switch (modal) {
+      case 'edit':
+        setOpenEditModal(true);
+        break;
+      case 'delete':
+        setOpenDeleteModal(true);
+        break;
+    }
+  };
+  const handleCloseModal = () => {
+    openEditModal && setOpenEditModal(false);
+    openDeleteModal && setOpenDeleteModal(false);
+  };
+
+  const handleChangeData = (id: string, value: string, modal: Modal) => {
+    setEditValue({
+      id,
+      value
+    });
+    handleOpenModal(modal);
+  }
+
+  const updateWord = async () => {
+    const response = await fetch(`/api/words?id=${editValue.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(editValue),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      setEditValue({
+        id: '',
+        value: ''
+      });
+      handleCloseModal();
+      setIsUpdated(true);
+      setError('');
+    }
+    else {
+      setEditValue({
+        id: '',
+        value: ''
+      });
+      handleCloseModal();
+      setError('Something went wrong! Try again')
+    }
+  }
+
+  const deleteWord = async () => {
+    const response = await fetch(`/api/words?id=${editValue.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      setEditValue({
+        id: '',
+        value: ''
+      });
+      handleCloseModal();
+      setIsUpdated(true);
+      setError('');
+    }
+    else {
+      setEditValue({
+        id: '',
+        value: ''
+      });
+      handleCloseModal();
+      setError('Something went wrong! Try again')
+    }
+
+  }
 
   return (
     <div className="w-screen min-h-screen bg-green-100 flex flex-col relative font-poppins">
@@ -50,20 +156,34 @@ const EditPage = () => {
             Back
           </button>
         </Link>
+        <section className="w-full flex justify-center items-center">
+          {error.length > 1 && (
+            <p className="text-sm text-red-500">
+              {error}{' '}
+              <button
+                className="p-1 bg-blue-500 text-white rounded-sm"
+                onClick={() => setError('')}>
+                Ok
+              </button>
+            </p>
+          )}
+        </section>
 
         <section className="flex flex-col h-auto items-center m-2 bg-white text-black rounded-lg shadow-sm">
           <p className="text-md">
-            {category.category} - {category.subcategory} <span className="text-xs">({words?.length})</span>
+            {category.category} - {category.subcategory}{' '}
+            <span className="text-xs">({words?.length})</span>
           </p>
-
-          {words
-            ?.map((item, i) => (
+          {isLoaded ? (
+            words?.map((item, i) => (
               <div
                 key={i}
                 className="flex flex-row w-full justify-between items-center p-2 border-b-2 border-blue-500 border-opacity-20">
                 <p className="text-sm">{item.value}</p>
                 <div className="flex flex-row justify-around items-center">
-                  <button className="p-2 rounded-full" onClick={() => console.log('edit')}>
+                  <button
+                    className="p-2 rounded-full"
+                    onClick={() => handleChangeData(item._id, item.value, 'edit')}>
                     <svg
                       className="w-6 h-6"
                       fill="currentColor"
@@ -73,7 +193,9 @@ const EditPage = () => {
                     </svg>
                   </button>
 
-                  <button className="p-2 rounded-full" onClick={() => console.log('add')}>
+                  <button
+                    className="p-2 rounded-full"
+                    onClick={() => handleChangeData(item._id, item.value, 'delete')}>
                     <svg
                       className="w-6 h-6"
                       fill="#FF0000"
@@ -88,7 +210,53 @@ const EditPage = () => {
                   </button>
                 </div>
               </div>
-            ))}
+            ))
+          ) : (
+            <div>Loading content...</div>
+          )}
+          <Modal open={openEditModal} onClose={handleCloseModal} className={classes.modal}>
+            <div className="flex flex-col justify-around items-center w-full h-auto m-2 p-2 bg-yellow-100 text-black rounded-md">
+              <h2>Edit {editValue.value}</h2>
+              <input
+                type="text"
+                className="p-2 m-2 w-full bg-white rounded-sm"
+                placeholder="Napisz pytanie"
+                value={editValue.value}
+                onChange={(e: { target: HTMLInputElement | any }) =>
+                  setEditValue({ ...editValue, value: e.target.value })
+                }
+              />
+              <div className="flex flex-row justify-center items-center w-full m-2">
+                <button
+                  className="bg-green-500 p-2 mx-2 text-white flex justify-center items-center rounded-sm"
+                  onClick={updateWord}>
+                  Save
+                </button>
+                <button
+                  className="bg-red-500 p-2 mx-2 text-white flex justify-center items-center rounded-sm"
+                  onClick={handleCloseModal}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </Modal>
+          <Modal open={openDeleteModal} onClose={handleCloseModal} className={classes.modal}>
+            <div className="flex flex-col justify-around items-center w-full h-auto m-2 p-2 bg-red-100 text-black rounded-md">
+              <h2>Do you want to delete {editValue.value}</h2>
+              <div className="flex flex-row justify-center items-center w-full m-2">
+                <button
+                  className="bg-green-500 p-2 mx-2 text-white flex justify-center items-center rounded-sm"
+                  onClick={deleteWord}>
+                  Yes
+                </button>
+                <button
+                  className="bg-red-500 p-2 mx-2 text-white flex justify-center items-center rounded-sm"
+                  onClick={handleCloseModal}>
+                  No
+                </button>
+              </div>
+            </div>
+          </Modal>
         </section>
       </main>
     </div>
