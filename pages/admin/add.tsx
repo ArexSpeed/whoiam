@@ -1,12 +1,37 @@
+import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 // eslint-disable-next-line prettier/prettier
-import { adminCategory, adminWords, addValue, removeValue, changeValue, reset } from 'redux/slices/adminSlice';
+import { adminCategory, adminWords, adminAddInfo, addValue, removeValue, changeValue, setAddInfo, reset, resetWords } from 'redux/slices/adminSlice';
 
 const AddNewWords = () => {
   const category = useAppSelector(adminCategory);
   const words = useAppSelector(adminWords);
+  const info = useAppSelector(adminAddInfo);
+  const router = useRouter();
   const dispatch = useAppDispatch();
+  const [feedback, setFeedback] = useState(false);
+
+  const addWords = async () => {
+    const response = await fetch('/api/words', {
+      method: 'POST',
+      body: JSON.stringify(words),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      dispatch(setAddInfo('Added correctly'));
+      dispatch(resetWords());
+      setFeedback(true);
+      router.push('/admin');
+    } else {
+      dispatch(setAddInfo('Something went wrong!'));
+      setFeedback(true);
+    }
+  }
 
   return (
     <div className="w-screen min-h-screen bg-green-100 flex flex-col relative font-poppins">
@@ -52,7 +77,9 @@ const AddNewWords = () => {
             {category.category} - {category.subcategory}
           </p>
           <div className="inline-flex">
-            <button className="p-2 m-2 items-center bg-green-500 text-white outline-none rounded-sm">
+            <button 
+              className="p-2 m-2 items-center bg-green-500 text-white outline-none rounded-sm" 
+              onClick={addWords}>
               ADD {words.length} WORDS
             </button>
             <Link href="/admin" passHref>
@@ -63,6 +90,28 @@ const AddNewWords = () => {
               </button>
             </Link>
           </div>
+          {feedback && (
+            <div>
+              <p>{info}</p>
+              <Link href="/admin" passHref>
+                <button className="m-2 inline-flex bg-blue-500 text-white p-2 rounded-sm">
+                  <svg
+                    className="w-6 h-6 mr-1"
+                    fill="#FFFFFF"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      fillRule="evenodd"
+                      d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>{' '}
+                  Back
+                </button>
+              </Link>
+            </div>
+          )}
+            
         </section>
       </main>
     </div>

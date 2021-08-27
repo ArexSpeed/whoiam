@@ -12,9 +12,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     case 'POST': {
       try {
         const payload = req.body; //payload has to be in [] cause insertMany
+        console.log(payload, 'payload in api')
         const options = { ordered: true };
         const words = await db.collection('words').insertMany(payload, options);
-        res.status(200).json({ status: 'created', words });
+        res.status(201).json({ status: 'Add new words', words });
       } catch (error) {
         res.status(422).json({ status: 'not_created', error });
       }
