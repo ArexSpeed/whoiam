@@ -1,18 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
+import type { CategoryPayload, SubcategoryType } from 'types';
 
-type Category = {
-  category: string;
-  subcategory: string;
-  subId: string;
-};
 
 type Word = {
   value: string;
 };
 
 interface State {
-  category: Category;
+  category: CategoryPayload;
   words: Word[];
 }
 
@@ -33,7 +29,7 @@ export const adminSlice = createSlice({
   name: 'admin',
   initialState,
   reducers: {
-    setCategory: (state, action: PayloadAction<Category>) => {
+    setCategory: (state, action: PayloadAction<CategoryPayload>) => {
       state.category = action.payload;
     },
     addValue: (state) => {

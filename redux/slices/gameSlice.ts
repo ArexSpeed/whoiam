@@ -1,37 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-
-type Subcategories = {
-  subId: string,
-  category: string,
-  subcategory: string
-}
+import type { CategoryPayload, SubcategoryType } from 'types';
 
 type Question = {
   question: string;
   answer: string;
 };
 
-type Category = {
-  category: string;
-  subcategory: string;
-  subId: string;
-};
-
 interface State {
-  subcategories: Subcategories[];
-  category: string;
-  subcategory: string;
-  subId: string;
+  subcategories: SubcategoryType[];
+  category: CategoryPayload;
   word: string;
   questions: Question[];
 }
 
 const initialState: State = {
   subcategories: [],
-  category: '',
-  subcategory: '',
-  subId: '',
+  category: {
+    category: '',
+    subcategory: '',
+    subId: ''
+  },
   word: '',
   questions: []
 };
@@ -40,13 +29,11 @@ export const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    setSubcategories: (state, action: PayloadAction<Subcategories[]>) => {
+    setSubcategories: (state, action: PayloadAction<SubcategoryType[]>) => {
       state.subcategories = action.payload
     },
-    setCategory: (state, action: PayloadAction<Category>) => {
-      state.category = action.payload.category;
-      state.subcategory = action.payload.subcategory;
-      state.subId = action.payload.subId;
+    setCategory: (state, action: PayloadAction<CategoryPayload>) => {
+      state.category = action.payload;
     },
     setWord: (state, action: PayloadAction<string>) => {
       state.word = action.payload;
@@ -55,9 +42,11 @@ export const gameSlice = createSlice({
       state.questions.push(action.payload);
     },
     reset: (state) => {
-      state.category = '';
-      state.subcategory = '';
-      state.subId = '';
+      state.category = {
+        category: '',
+        subcategory: '',
+        subId: ''
+      };
       state.word = '';
       state.questions = [];
     }
@@ -67,9 +56,7 @@ export const gameSlice = createSlice({
 export const { setSubcategories, setCategory, setWord, setQuestion, reset } = gameSlice.actions;
 
 export const allSubcategories = (state: RootState) => state.game.subcategories;
-export const selectedCategory = (state: RootState) => state.game.category;
-export const selectedSubcategory = (state: RootState) => state.game.subcategory;
-export const selectedSubId = (state: RootState) => state.game.subId;
+export const selectedCategory = (state: RootState) => state.game.category; 
 export const selectedWord = (state: RootState) => state.game.word;
 export const selectedQuestions = (state: RootState) => state.game.questions;
 

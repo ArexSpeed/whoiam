@@ -2,21 +2,13 @@ import { useEffect } from 'react';
 import CategoryBox from 'components/CategoryBox';
 import { useAppDispatch } from 'redux/hooks';
 import type { NextPage } from 'next';
+import type { CategoryType, SubcategoryType } from 'types';
 import { getCategories, getSubcategories } from 'services/categories';
 import { setSubcategories } from 'redux/slices/gameSlice';
 
-type Categories = {
-  catId: string,
-  category: string
-}
-type Subcategories = {
-  subId: string,
-  category: string,
-  subcategory: string
-}
 interface Props {
-  categories: Categories[];
-  subcategories: Subcategories[];
+  categories: CategoryType[];
+  subcategories: SubcategoryType[];
 }
 
 export const getServerSideProps = async () => {

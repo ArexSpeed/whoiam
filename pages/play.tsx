@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAppSelector } from 'redux/hooks';
-import { selectedCategory, selectedSubcategory, selectedWord } from 'redux/slices/gameSlice';
+import { selectedCategory, selectedWord } from 'redux/slices/gameSlice';
 
 const Play = () => {
   const category = useAppSelector(selectedCategory);
-  const subcategory = useAppSelector(selectedSubcategory);
   const word = useAppSelector(selectedWord);
   const [start, setStart] = useState(false);
   const [counter, setCounter] = useState(5);
@@ -29,7 +28,7 @@ const Play = () => {
   return (
     <div className="w-screen h-screen min-h-screen bg-primary flex flex-col relative font-poppins overflow-hidden">
       <header className="w-full text-center text-sm h-[20px] flex-none mt-2">
-        {category} - {subcategory}
+        {category.category} - {category.subcategory}
       </header>
       <main className="w-full flex flex-wrap flex-grow justify-center items-center overflow-auto">
         {start ? (

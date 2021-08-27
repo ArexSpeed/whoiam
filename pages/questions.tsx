@@ -4,13 +4,7 @@ import Question from 'components/Question';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import {
-  setQuestion,
-  selectedQuestions,
-  selectedCategory,
-  selectedSubcategory,
-  reset
-} from 'redux/slices/gameSlice';
+import { setQuestion, selectedQuestions, selectedCategory, reset } from 'redux/slices/gameSlice';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -25,7 +19,6 @@ const useStyles = makeStyles(() =>
 const Questions = () => {
   const questions = useAppSelector(selectedQuestions);
   const category = useAppSelector(selectedCategory);
-  const subcategory = useAppSelector(selectedSubcategory);
   const [openModal, setOpenModal] = useState(false);
   const [modalQuestion, setModalQuestion] = useState('');
   const [modalAnswer, setModalAnswer] = useState('');
@@ -58,7 +51,7 @@ const Questions = () => {
   return (
     <div className="w-screen h-screen min-h-screen bg-primary flex flex-col relative font-poppins overflow-hidden">
       <header className="w-full text-center text-sm h-[20px] flex-none mt-2">
-        {category} - {subcategory}
+        {category.category} - {category.subcategory}
       </header>
       <main className="w-full flex-grow">
         <section className="m-2">Pytania:</section>
