@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import type { CategoryPayload, SubcategoryType } from 'types';
-import category from 'pages/api/category';
-
+import type { CategoryPayload, SubcategoryType, WordsType } from 'types';
 
 type Word = {
   value: string;
@@ -11,7 +9,8 @@ type Word = {
 
 interface State {
   category: CategoryPayload;
-  words: Word[];
+  words: WordsType[];
+  newWords: Word[];
   addInfo: string;
 }
 
@@ -22,6 +21,7 @@ const initialState: State = {
     subId: ''
   },
   words: [],
+  newWords: [],
   addInfo: ''
 };
 
@@ -31,22 +31,25 @@ export const adminSlice = createSlice({
   reducers: {
     setCategory: (state, action: PayloadAction<CategoryPayload>) => {
       state.category = action.payload;
-      state.words.push({
+      state.newWords.push({
         value: '',
         subId: state.category.subId
       });
     },
-    addValue: (state) => {
-      state.words.push({
+    setWords: (state, action: PayloadAction<WordsType[]>) => {
+      state.words = action.payload
+    },
+    addWordValue: (state) => {
+      state.newWords.push({
         value: '',
         subId: state.category.subId
       });
     },
-    removeValue: (state) => {
-      state.words.pop();
+    removeWordValue: (state) => {
+      state.newWords.pop();
     },
-    changeValue: (state, action) => {
-      state.words[action.payload.id].value = action.payload.value;
+    changeWordValue: (state, action) => {
+      state.newWords[action.payload.id].value = action.payload.value;
     },
     setAddInfo : (state, action: PayloadAction<string>) => {
       state.addInfo = action.payload;
@@ -57,19 +60,20 @@ export const adminSlice = createSlice({
         subcategory: '',
         subId: ''
       };
-      state.words = [];
+      state.newWords = [];
       state.addInfo = ''
     },
     resetWords: (state) => {
-      state.words = [];
+      state.newWords = [];
     }
   }
 });
 
-export const { setCategory, addValue, removeValue, changeValue, setAddInfo, reset, resetWords } = adminSlice.actions;
+export const { setCategory, setWords, addWordValue, removeWordValue, changeWordValue, setAddInfo, reset, resetWords } = adminSlice.actions;
 
 export const adminCategory = (state: RootState) => state.admin.category;
 export const adminWords = (state: RootState) => state.admin.words;
+export const adminNewWords = (state: RootState) => state.admin.newWords;
 export const adminAddInfo = (state: RootState) => state.admin.addInfo;
 
 export default adminSlice.reducer;

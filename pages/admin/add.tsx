@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 // eslint-disable-next-line prettier/prettier
-import { adminCategory, adminWords, adminAddInfo, addValue, removeValue, changeValue, setAddInfo, reset, resetWords } from 'redux/slices/adminSlice';
+import { adminCategory, adminWords, adminAddInfo, addWordValue, removeWordValue, changeWordValue, setAddInfo, reset, resetWords } from 'redux/slices/adminSlice';
 
 const AddNewWords = () => {
   const category = useAppSelector(adminCategory);
@@ -45,14 +45,14 @@ const AddNewWords = () => {
             <button
               className="w-6 h-6 inline-flex justify-center items-center rounded-full bg-blue-400"
               disabled={words.length === 1}
-              onClick={() => dispatch(removeValue())}>
+              onClick={() => dispatch(removeWordValue())}>
               <span>-</span>
             </button>{' '}
             {words.length}{' '}
             <button
               className="w-6 h-6 inline-flex justify-center items-center rounded-full bg-blue-400"
               disabled={words.length === 20}
-              onClick={() => dispatch(addValue())}>
+              onClick={() => dispatch(addWordValue())}>
               <span>+</span>
             </button>{' '}
             words
@@ -67,7 +67,7 @@ const AddNewWords = () => {
               placeholder={`word ${i + 1}`}
               value={word.value}
               onChange={(e: { target: HTMLInputElement | any }) =>
-                dispatch(changeValue({ id: i, value: e.target.value }))
+                dispatch(changeWordValue({ id: i, value: e.target.value }))
               }
             />
           ))}

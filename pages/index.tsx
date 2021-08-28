@@ -3,7 +3,7 @@ import CategoryBox from 'components/CategoryBox';
 import { useAppDispatch } from 'redux/hooks';
 import type { NextPage } from 'next';
 import type { CategoryType, SubcategoryType } from 'types';
-import { getCategories, getSubcategories } from 'services/categories';
+import { getCategories, getSubcategories } from 'services/getData';
 import { setSubcategories } from 'redux/slices/gameSlice';
 
 interface Props {

@@ -1,8 +1,10 @@
-import React from 'react';
+import { useEffect } from 'react';
 import type { NextPage } from 'next';
 import type { CategoryType, SubcategoryType, WordsType } from 'types';
 import AdminCategory from 'components/AdminCategory';
-import { getCategories, getSubcategories, getWords } from 'services/categories';
+import { getCategories, getSubcategories, getWords } from 'services/getData';
+import { useAppDispatch } from 'redux/hooks'
+import { setWords } from 'redux/slices/adminSlice'
 
 interface Props {
   categories: CategoryType[];
@@ -25,7 +27,11 @@ export const getServerSideProps = async () => {
 };
 
 const AdminPage: NextPage<Props>  = ({ categories, subcategories, words }) => {
-  console.log(words, 'words');
+  const dispatch = useAppDispatch();
+  // dispatch words to redux instead in all category, cause of connection number
+  useEffect(() => {
+    dispatch(setWords(words));
+  }, [words])
   return (
     <div className="w-screen min-h-screen bg-green-100 flex flex-col relative font-poppins">
       <header className="w-full text-center text-sm h-[20px] flex-none mt-2">Admin Panel</header>
