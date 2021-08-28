@@ -14,3 +14,10 @@ export async function connectToDb() {
   console.log(`Successfully connected to database: ${db.databaseName}`);
   return db;
 }
+
+export async function closeConnection() {
+  const client: mongoDB.MongoClient = new MongoClient(DB_URI);
+  console.log('Connection is close');
+  const close = await client.close();
+  return close;
+}

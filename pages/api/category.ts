@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { connectToDb } from 'services/connectdb';
+import { connectToDb, closeConnection } from 'services/connectdb';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const db = await connectToDb();
@@ -7,6 +7,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     case 'GET': {
       const data = await db.collection('categories').find().sort({ _id: 1 }).toArray();
       res.json(data);
+      closeConnection();
       break;
     }
     case 'POST': {
@@ -20,6 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (error) {
         res.status(422).json({ status: 'not_created', error });
       }
+      closeConnection();
       break;
     }
 

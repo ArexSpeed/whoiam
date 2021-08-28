@@ -14,3 +14,8 @@ export type CategoryPayload = {
   subcategory: string;
   subId: string;
 };
+
+export type WordsType = {
+  subId: string;
+  value: string;
+}

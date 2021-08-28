@@ -23,3 +23,15 @@ export const getSubcategories = async () => {
 
   return data;
 }
+
+export const getWords = async () => {
+  const data = await fetch(`${url}/api/words`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json());
+
+  return data;
+}

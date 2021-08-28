@@ -1,15 +1,24 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { connectToDb } from 'services/connectdb';
+import { connectToDb, closeConnection } from 'services/connectdb';
 import { ObjectId } from 'mongodb';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const db = await connectToDb();
   switch (req.method) {
     case 'GET': {
-      const subId = req.query.subId;
-      const data = await db.collection('words').find({ subId: subId }).sort({ _id: 1 }).toArray();
-      res.json(data);
-      break;
+      const query = req.query;
+      if (query.subId) {
+        const subId = query.subId;
+        const data = await db.collection('words').find({ subId: subId }).sort({ _id: 1 }).toArray();
+        res.json(data);
+        closeConnection();
+        break;
+      } else {
+        const data = await db.collection('words').find().sort({ _id: 1 }).toArray();
+        res.json(data);
+        closeConnection();
+        break;
+      }
     }
     case 'POST': {
       try {
@@ -20,6 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (error) {
         res.status(422).json({ status: 'not_created', error });
       }
+      closeConnection();
       break;
     }
     case 'PUT': {
@@ -39,6 +49,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (error) {
         res.status(422).json({ status: 'not_created', error });
       }
+      closeConnection();
       break;
     }
     case 'DELETE': {
@@ -51,6 +62,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (error) {
         res.status(422).json({ status: 'not_created', error });
       }
+      closeConnection();
       break;
     }
 
