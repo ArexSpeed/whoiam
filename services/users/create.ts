@@ -12,9 +12,7 @@ const checkUserExist = async (email: string) => {
   console.log('check exists')
   const db = await connectToDb();
   const existingUserEmail = await db.collection('users').findOne({ "email": email });
-  //const existingUserName = await db.collection('users').findOne({ "name": name });
   console.log(existingUserEmail, 'exist email');
- // console.log(existingUserName, 'exist name');
   if (existingUserEmail ) {
     throw new Error('This user is exists');
   }

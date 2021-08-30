@@ -8,6 +8,7 @@ import { useAppDispatch } from 'redux/hooks'
 import { setWords } from 'redux/slices/adminSlice'
 import Login from 'components/Login';
 import Register from 'components/Register';
+import { getSession } from 'next-auth/client';
 
 interface Props {
   categories: CategoryType[];

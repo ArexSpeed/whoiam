@@ -3,11 +3,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 // eslint-disable-next-line prettier/prettier
-import { adminCategory, adminWords, adminAddInfo, addWordValue, removeWordValue, changeWordValue, setAddInfo, reset, resetWords } from 'redux/slices/adminSlice';
+import { adminCategory, adminNewWords, adminAddInfo, addWordValue, removeWordValue, changeWordValue, setAddInfo, reset, resetWords } from 'redux/slices/adminSlice';
 
 const AddNewWords = () => {
   const category = useAppSelector(adminCategory);
-  const words = useAppSelector(adminWords);
+  const words = useAppSelector(adminNewWords);
   const info = useAppSelector(adminAddInfo);
   const router = useRouter();
   const dispatch = useAppDispatch();

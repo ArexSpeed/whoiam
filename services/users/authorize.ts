@@ -14,7 +14,6 @@ const authorizeUser = async (payload: Record<"email" | "password", string>) => {
 
   const user = await db.collection('users').findOne({ "email": email })
 
-  console.log(user, 'user in services');
   if (!user) {
     return null;
   }

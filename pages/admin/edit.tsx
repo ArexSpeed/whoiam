@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-//import words from 'data/words.json';
 import { useAppSelector } from 'redux/hooks';
 import { adminCategory } from 'redux/slices/adminSlice';
 import Modal from '@material-ui/core/Modal';
@@ -212,7 +211,7 @@ const EditPage = () => {
               </div>
             ))
           ) : (
-            <div>Loading content...</div>
+            <div>Loading words...</div>
           )}
           <Modal open={openEditModal} onClose={handleCloseModal} className={classes.modal}>
             <div className="flex flex-col justify-around items-center w-full h-auto m-2 p-2 bg-yellow-100 text-black rounded-md">

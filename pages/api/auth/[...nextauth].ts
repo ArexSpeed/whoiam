@@ -15,7 +15,6 @@ export default NextAuth({
           email: credentials.email,
           password: credentials.password
         });
-        console.log(user, 'user in async')
 
         if (user) {
           return user;
@@ -36,9 +35,9 @@ export default NextAuth({
     },
 
     async session(session, token) {
-      session.user.id = token?.id;
-      session.user.name = token?.name;
-
+      if (session.user) {
+        session.user.name = token?.name;
+      }
       return session;
     }
   }

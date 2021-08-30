@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectToDb, closeConnection } from 'services/connectdb';
 import { ObjectId } from 'mongodb';
+import { getSession } from 'next-auth/client';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const db = await connectToDb();
@@ -22,6 +23,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     case 'POST': {
       try {
+        const session = await getSession({ req });
+        if (!session) {
+          return res.status(401).json({ error: 'not_authorized' });
+        }
         const payload = req.body; //payload has to be in [] cause insertMany
         const options = { ordered: true };
         const words = await db.collection('words').insertMany(payload, options);
@@ -33,6 +38,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     }
     case 'PUT': {
+      const session = await getSession({ req });
+        if (!session) {
+          return res.status(401).json({ error: 'not_authorized' });
+        }
       try {
         const id = new ObjectId(req.query.id.toString());
         console.log(id, 'id query');
@@ -53,6 +62,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     }
     case 'DELETE': {
+      const session = await getSession({ req });
+        if (!session) {
+          return res.status(401).json({ error: 'not_authorized' });
+        }
       try {
         const id = new ObjectId(req.query.id.toString());
         console.log(id, 'id query deleting');
