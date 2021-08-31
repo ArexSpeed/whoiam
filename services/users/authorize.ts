@@ -30,6 +30,7 @@ const authorizeUser = async (payload: Record<"email" | "password", string>) => {
     id: user._id,
     email: user.email,
     name: user.name,
+    isAdmin: user.isAdmin
   };
 };
 

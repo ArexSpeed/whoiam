@@ -35,3 +35,16 @@ export const getWords = async () => {
 
   return data;
 }
+
+type UserEmail = string | null | undefined;
+export const getUser = async (email: UserEmail) => {
+  const data = await fetch(`${url}/api/users?email=${email}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json());
+
+  return data;
+}

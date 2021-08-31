@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Icon from './Icon';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setCategory } from 'redux/slices/adminSlice';
@@ -9,15 +10,28 @@ import type { SubcategoryType } from 'types';
 interface Props {
   category: string;
   subcategories: SubcategoryType[];
+  isAdmin: boolean;
 }
 
-const AdminCategory: FC<Props> = ({ category, subcategories }) => {
+const AdminCategory: FC<Props> = ({ category, subcategories, isAdmin }) => {
   const words = useAppSelector(adminWords);
   const [active, setActive] = useState(false);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
-  const selectCategory = (subcategory: string, subId: string) => {
-    dispatch(setCategory({ category, subcategory, subId }));
+  const selectCategory = (subcategory: string, subId: string, link: 'add' | 'edit') => {
+    console.log(isAdmin, 'isAdmin');
+    if (isAdmin) {
+      dispatch(setCategory({ category, subcategory, subId }));
+      if (link === 'add') {
+        router.push('/admin/add');
+      }
+      if (link === 'edit') {
+        router.push('/admin/edit');
+      }
+    } else {
+      alert('You are not Admin yet! Wait until you will get access!');
+    }
   };
 
   return (
@@ -44,41 +58,37 @@ const AdminCategory: FC<Props> = ({ category, subcategories }) => {
                     </span>
                   </p>
                   <div className="flex flex-row justify-around items-center">
-                    <Link href="/admin/add" passHref>
-                      <button
-                        className="p-2 rounded-full"
-                        onClick={() => selectCategory(item.subcategory, item.subId)}>
-                        <svg
-                          className="w-6 h-6"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            fillRule="evenodd"
-                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </button>
-                    </Link>
-                    <Link href="/admin/edit" passHref>
-                      <button
-                        className="p-2 rounded-full"
-                        onClick={() => selectCategory(item.subcategory, item.subId)}>
-                        <svg
-                          className="w-6 h-6"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-                          <path
-                            fillRule="evenodd"
-                            d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </button>
-                    </Link>
+                    <button
+                      className="p-2 rounded-full"
+                      onClick={() => selectCategory(item.subcategory, item.subId, 'add')}>
+                      <svg
+                        className="w-6 h-6"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          fillRule="evenodd"
+                          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      className="p-2 rounded-full"
+                      onClick={() => selectCategory(item.subcategory, item.subId, 'edit')}>
+                      <svg
+                        className="w-6 h-6"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                        <path
+                          fillRule="evenodd"
+                          d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
                   </div>
                 </div>
               ))}

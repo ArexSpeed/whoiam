@@ -34,7 +34,8 @@ const create = async (payload: Record<"email" | "password" | "name", string>) =>
       email,
       name,
       passwordSalt,
-      passwordHash
+      passwordHash,
+      isAdmin: false
     }
   );
 

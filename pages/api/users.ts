@@ -7,7 +7,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   switch (req.method) {
     case 'GET': {
-      const data = await db.collection("users").find({"user": req.query.user}).sort({_id: 1}).toArray();
+      console.log(req.query, 'query user');
+      const data = await db.collection("users").find({"email": req.query.email}).sort({_id: 1}).toArray();
       res.json(data);
       closeConnection();
       break;

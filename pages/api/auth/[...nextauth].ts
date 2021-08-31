@@ -15,7 +15,6 @@ export default NextAuth({
           email: credentials.email,
           password: credentials.password
         });
-
         if (user) {
           return user;
         } else {
@@ -38,6 +37,7 @@ export default NextAuth({
       if (session.user) {
         session.user.name = token?.name;
       }
+
       return session;
     }
   }
