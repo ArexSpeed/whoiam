@@ -13,7 +13,7 @@ const CategoryBox: FC<Props> = ({ category }) => {
   const [active, setActive] = useState(false);
   const [subcategory, setSubcategory] = useState('');
   const [subId, setSubId] = useState('');
-  const [start, setStart] = useState('START')
+  const [start, setStart] = useState('START');
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -40,8 +40,7 @@ const CategoryBox: FC<Props> = ({ category }) => {
       headers: {
         'Content-Type': 'application/json'
       }
-    })
-    .then(response => response.json());
+    }).then((response) => response.json());
 
     const rand = Math.floor(Math.random() * words.length);
     const randWord = words[rand].value;

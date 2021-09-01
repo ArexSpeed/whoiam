@@ -6,11 +6,10 @@ export const getCategories = async () => {
     headers: {
       'Content-Type': 'application/json'
     }
-  })
-  .then(response => response.json());
+  }).then((response) => response.json());
 
   return data;
-}
+};
 
 export const getSubcategories = async () => {
   const data = await fetch(`${url}/api/subcategory`, {
@@ -18,11 +17,10 @@ export const getSubcategories = async () => {
     headers: {
       'Content-Type': 'application/json'
     }
-  })
-  .then(response => response.json());
+  }).then((response) => response.json());
 
   return data;
-}
+};
 
 export const getWords = async () => {
   const data = await fetch(`${url}/api/words`, {
@@ -30,11 +28,10 @@ export const getWords = async () => {
     headers: {
       'Content-Type': 'application/json'
     }
-  })
-  .then(response => response.json());
+  }).then((response) => response.json());
 
   return data;
-}
+};
 
 type UserEmail = string | null | undefined;
 export const getUser = async (email: UserEmail) => {
@@ -43,8 +40,7 @@ export const getUser = async (email: UserEmail) => {
     headers: {
       'Content-Type': 'application/json'
     }
-  })
-  .then(response => response.json());
+  }).then((response) => response.json());
 
   return data;
-}
+};

@@ -8,7 +8,6 @@ const Login = () => {
   const [formProcessing, setFormProcessing] = useState(false);
   const router = useRouter();
 
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formProcessing) return;

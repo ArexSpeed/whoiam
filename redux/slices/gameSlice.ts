@@ -30,7 +30,7 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     setSubcategories: (state, action: PayloadAction<SubcategoryType[]>) => {
-      state.subcategories = action.payload
+      state.subcategories = action.payload;
     },
     setCategory: (state, action: PayloadAction<CategoryPayload>) => {
       state.category = action.payload;
@@ -56,7 +56,7 @@ export const gameSlice = createSlice({
 export const { setSubcategories, setCategory, setWord, setQuestion, reset } = gameSlice.actions;
 
 export const allSubcategories = (state: RootState) => state.game.subcategories;
-export const selectedCategory = (state: RootState) => state.game.category; 
+export const selectedCategory = (state: RootState) => state.game.category;
 export const selectedWord = (state: RootState) => state.game.word;
 export const selectedQuestions = (state: RootState) => state.game.questions;
 

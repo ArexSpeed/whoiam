@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import type { CategoryPayload, SubcategoryType, WordsType } from 'types';
+import type { CategoryPayload, WordsType } from 'types';
 
 type Word = {
   value: string;
@@ -37,7 +37,7 @@ export const adminSlice = createSlice({
       });
     },
     setWords: (state, action: PayloadAction<WordsType[]>) => {
-      state.words = action.payload
+      state.words = action.payload;
     },
     addWordValue: (state) => {
       state.newWords.push({
@@ -51,7 +51,7 @@ export const adminSlice = createSlice({
     changeWordValue: (state, action) => {
       state.newWords[action.payload.id].value = action.payload.value;
     },
-    setAddInfo : (state, action: PayloadAction<string>) => {
+    setAddInfo: (state, action: PayloadAction<string>) => {
       state.addInfo = action.payload;
     },
     reset: (state) => {
@@ -61,7 +61,7 @@ export const adminSlice = createSlice({
         subId: ''
       };
       state.newWords = [];
-      state.addInfo = ''
+      state.addInfo = '';
     },
     resetWords: (state) => {
       state.newWords = [];
@@ -69,6 +69,7 @@ export const adminSlice = createSlice({
   }
 });
 
+// eslint-disable-next-line prettier/prettier
 export const { setCategory, setWords, addWordValue, removeWordValue, changeWordValue, setAddInfo, reset, resetWords } = adminSlice.actions;
 
 export const adminCategory = (state: RootState) => state.admin.category;

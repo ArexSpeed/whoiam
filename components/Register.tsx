@@ -1,12 +1,11 @@
 import { useRef, useState, FormEvent } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/client';
 
 type PayloadData = {
-  email: FormDataEntryValue | null;
-  name: FormDataEntryValue | null;
-  password: FormDataEntryValue | null;
+  email: string | File | null;
+  name: string | File | null;
+  password: string | File | null;
 };
 
 const Register = () => {
@@ -109,8 +108,8 @@ const Register = () => {
       </button>
       {error && (
         <div className="w-full p-2 my-2 text-center text-sm bg-red-500 text-white flex flex-row justify-center items-center shadow-md rounded-md">
-        Account not created {error}
-      </div>
+          Account not created {error}
+        </div>
       )}
       {createInfo && <p>{createInfo}</p>}
     </form>

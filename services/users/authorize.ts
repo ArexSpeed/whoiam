@@ -7,11 +7,12 @@ const schema = Joi.object({
   password: Joi.string().required()
 });
 
-const authorizeUser = async (payload: Record<"email" | "password", string>) => {
+const authorizeUser = async (payload: Record<'email' | 'password', string>) => {
   const db = await connectToDb();
   const { email, password } = await schema.validateAsync(payload);
 
-  const user = await db.collection('users').findOne({ "email": email })
+  // eslint-disable-next-line prettier/prettier
+  const user = await db.collection('users').findOne({ "email": email });
 
   if (!user) {
     return null;
