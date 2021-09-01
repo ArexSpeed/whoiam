@@ -44,7 +44,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         }
       try {
         const id = new ObjectId(req.query.id.toString());
-        console.log(id, 'id query');
         const payload = req.body; //payload has to be in [] cause insertMany
         const filter = { _id: id};
         const updateDoc = {
@@ -68,7 +67,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         }
       try {
         const id = new ObjectId(req.query.id.toString());
-        console.log(id, 'id query deleting');
         const filter = { _id: id};
         const words = await db.collection('words').deleteOne(filter);
         res.status(201).json({ status: 'Edit correctlty', words });

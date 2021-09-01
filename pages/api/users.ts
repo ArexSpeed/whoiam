@@ -7,16 +7,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   switch (req.method) {
     case 'GET': {
-      console.log(req.query, 'query user');
+      try {
       const data = await db.collection("users").find({"email": req.query.email}).sort({_id: 1}).toArray();
       res.json(data);
       closeConnection();
+      } catch (error) {
+        res.status(422).json({ status: 'not_found', error });
+      }
       break;
     }
     case 'POST': {
       try {
         const payload = req.body;
-        console.log(payload, 'body')
         const data = await create(payload);
         res.status(200).json({ status: 'created', data});
       } catch (error) {

@@ -9,10 +9,8 @@ const schema = Joi.object({
 });
 
 const checkUserExist = async (email: string) => {
-  console.log('check exists')
   const db = await connectToDb();
   const existingUserEmail = await db.collection('users').findOne({ "email": email });
-  console.log(existingUserEmail, 'exist email');
   if (existingUserEmail ) {
     throw new Error('This user is exists');
   }
@@ -20,7 +18,6 @@ const checkUserExist = async (email: string) => {
 };
 
 const create = async (payload: Record<"email" | "password" | "name", string>) => {
-  //console.log(payload, 'payload in services/create');
   const db = await connectToDb();
   const { email, name, password } = await schema.validateAsync(payload);
   await checkUserExist(email);

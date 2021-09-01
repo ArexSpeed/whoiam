@@ -20,7 +20,6 @@ const AdminCategory: FC<Props> = ({ category, subcategories, isAdmin }) => {
   const router = useRouter();
 
   const selectCategory = (subcategory: string, subId: string, link: 'add' | 'edit') => {
-    console.log(isAdmin, 'isAdmin');
     if (isAdmin) {
       dispatch(setCategory({ category, subcategory, subId }));
       if (link === 'add') {

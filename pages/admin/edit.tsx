@@ -44,17 +44,14 @@ const EditPage = () => {
           'Content-Type': 'application/json'
         }
       }).then((response) => response.json());
-      console.log(data, 'data in async');
       setWords(data);
       setIsLoaded(true);
     })();
-    console.log('effect');
     return setIsUpdated(false);
   }, [adminCategory, isUpdated]);
 
   // Modals
   const handleOpenModal = (modal: Modal) => {
-    console.log(modal, 'modal');
     switch (modal) {
       case 'edit':
         setOpenEditModal(true);

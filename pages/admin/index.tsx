@@ -23,7 +23,6 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
-  console.log(session, 'session serversideprops')
   const categories = await getCategories();
   const subcategories = await getSubcategories();
   const words = await getWords();
@@ -53,7 +52,6 @@ const AdminPage: NextPage<Props>  = ({ categories, subcategories, words, user })
     setIsAdmin(user[0].isAdmin);
   }, [user])
 
-  console.log(session, 'session client');
     return !session && !loading ? (
       <div className="w-screen min-h-screen bg-green-100 flex flex-col relative font-poppins">
         <header className="w-full flex justify-center h-6">
@@ -80,7 +78,6 @@ const AdminPage: NextPage<Props>  = ({ categories, subcategories, words, user })
         </button>
       </header>
       <main className="w-full">
-        {console.log(session, 'session')}
         <section className="m-2">Categories:</section>
         <section className="w-full flex flex-col">
           {categories?.map((category) => (
