@@ -12,7 +12,7 @@ type Words = {
   value: string;
   subId: string;
 };
-type Modal = 'edit' | 'delete';
+type ModalType = 'edit' | 'delete';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -70,7 +70,7 @@ const EditPage = () => {
   }, [adminCategory, isUpdated]);
 
   // Modals
-  const handleOpenModal = (modal: Modal) => {
+  const handleOpenModal = (modal: ModalType) => {
     switch (modal) {
       case 'edit':
         setOpenEditModal(true);
@@ -85,13 +85,13 @@ const EditPage = () => {
     openDeleteModal && setOpenDeleteModal(false);
   };
 
-  const handleChangeData = (id: string, value: string, modal: Modal) => {
+  const handleChangeData = (id: string, value: string, modal: ModalType) => {
     setEditValue({
       id,
       value
     });
     handleOpenModal(modal);
-  }
+  };
 
   const updateWord = async () => {
     const response = await fetch(`/api/words?id=${editValue.id}`, {
@@ -110,16 +110,15 @@ const EditPage = () => {
       handleCloseModal();
       setIsUpdated(true);
       setError('');
-    }
-    else {
+    } else {
       setEditValue({
         id: '',
         value: ''
       });
       handleCloseModal();
-      setError('Something went wrong! Try again')
+      setError('Something went wrong! Try again');
     }
-  }
+  };
 
   const deleteWord = async () => {
     const response = await fetch(`/api/words?id=${editValue.id}`, {
@@ -137,17 +136,15 @@ const EditPage = () => {
       handleCloseModal();
       setIsUpdated(true);
       setError('');
-    }
-    else {
+    } else {
       setEditValue({
         id: '',
         value: ''
       });
       handleCloseModal();
-      setError('Something went wrong! Try again')
+      setError('Something went wrong! Try again');
     }
-
-  }
+  };
 
   return (
     <div className="w-screen min-h-screen bg-green-100 flex flex-col relative font-poppins">
