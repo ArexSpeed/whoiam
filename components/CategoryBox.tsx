@@ -13,6 +13,7 @@ const CategoryBox: FC<Props> = ({ category }) => {
   const [active, setActive] = useState(false);
   const [subcategory, setSubcategory] = useState('');
   const [subId, setSubId] = useState('');
+  const [start, setStart] = useState('START')
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -30,6 +31,7 @@ const CategoryBox: FC<Props> = ({ category }) => {
       })
     );
     drawWord();
+    setStart('LOSUJE...');
   };
 
   const drawWord = async () => {
@@ -84,7 +86,7 @@ const CategoryBox: FC<Props> = ({ category }) => {
           </section>
           <section>
             <button className="p-2 m-2 bg-green-500 rounded-md" onClick={handleStart}>
-              START
+              {start}
             </button>
           </section>
         </div>

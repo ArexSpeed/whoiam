@@ -26,8 +26,8 @@ export const getServerSideProps = async () => {
 const Home: NextPage<Props> = ({ categories, subcategories }) => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(setSubcategories(subcategories))
-  }, [subcategories]);
+    dispatch(setSubcategories(subcategories));
+  }, [subcategories, dispatch]);
   return (
     <div className="w-screen h-screen min-h-screen bg-primary flex flex-col relative font-poppins">
       <header className="w-full flex justify-end">

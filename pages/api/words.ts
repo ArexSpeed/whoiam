@@ -3,6 +3,7 @@ import { connectToDb, closeConnection } from 'services/connectdb';
 import { ObjectId } from 'mongodb';
 import { getSession } from 'next-auth/client';
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const db = await connectToDb();
   switch (req.method) {
@@ -39,17 +40,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     case 'PUT': {
       const session = await getSession({ req });
-        if (!session) {
-          return res.status(401).json({ error: 'not_authorized' });
-        }
+      if (!session) {
+        return res.status(401).json({ error: 'not_authorized' });
+      }
       try {
         const id = new ObjectId(req.query.id.toString());
         const payload = req.body; //payload has to be in [] cause insertMany
-        const filter = { _id: id};
+        const filter = { _id: id };
         const updateDoc = {
           $set: {
-            value: payload.value,
-          },
+            value: payload.value
+          }
         };
         const options = { upsert: true };
         const words = await db.collection('words').findOneAndUpdate(filter, updateDoc, options);
@@ -62,12 +63,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     case 'DELETE': {
       const session = await getSession({ req });
-        if (!session) {
-          return res.status(401).json({ error: 'not_authorized' });
-        }
+      if (!session) {
+        return res.status(401).json({ error: 'not_authorized' });
+      }
       try {
         const id = new ObjectId(req.query.id.toString());
-        const filter = { _id: id};
+        const filter = { _id: id };
         const words = await db.collection('words').deleteOne(filter);
         res.status(201).json({ status: 'Edit correctlty', words });
       } catch (error) {

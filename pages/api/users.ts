@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectToDb, closeConnection } from 'services/connectdb';
 import create from 'services/users/create';
@@ -8,9 +9,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'GET': {
       try {
-      const data = await db.collection("users").find({"email": req.query.email}).sort({_id: 1}).toArray();
-      res.json(data);
-      closeConnection();
+        const data = await db
+          .collection('users')
+          .find({ email: req.query.email })
+          .sort({ _id: 1 })
+          .toArray();
+        res.json(data);
+        closeConnection();
       } catch (error) {
         res.status(422).json({ status: 'not_found', error });
       }
@@ -20,7 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       try {
         const payload = req.body;
         const data = await create(payload);
-        res.status(200).json({ status: 'created', data});
+        res.status(200).json({ status: 'created', data });
       } catch (error) {
         res.status(422).json({ status: 'not_created', error });
       }
@@ -30,5 +35,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     default:
       res.status(400);
   }
-
 };
