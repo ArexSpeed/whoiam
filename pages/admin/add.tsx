@@ -1,9 +1,28 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import type { GetServerSideProps } from 'next';
+import { getSession } from 'next-auth/client';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 // eslint-disable-next-line prettier/prettier
 import { adminCategory, adminNewWords, adminAddInfo, addWordValue, removeWordValue, changeWordValue, setAddInfo, reset, resetWords } from 'redux/slices/adminSlice';
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/admin',
+        permanent: false
+      }
+    };
+  }
+  return {
+    props: {
+      session
+    }
+  };
+};
 
 const AddNewWords = () => {
   const category = useAppSelector(adminCategory);

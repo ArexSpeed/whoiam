@@ -4,6 +4,8 @@ import { useAppSelector } from 'redux/hooks';
 import { adminCategory } from 'redux/slices/adminSlice';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
+import type { GetServerSideProps } from 'next';
+import { getSession } from 'next-auth/client';
 
 type Words = {
   _id: string;
@@ -21,6 +23,23 @@ const useStyles = makeStyles(() =>
     }
   })
 );
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/admin',
+        permanent: false
+      }
+    };
+  }
+  return {
+    props: {
+      session
+    }
+  };
+};
 
 const EditPage = () => {
   const category = useAppSelector(adminCategory);

@@ -49,7 +49,7 @@ const AdminPage: NextPage<Props>  = ({ categories, subcategories, words, user })
   }, [words])
 
   useEffect(() => {
-    setIsAdmin(user[0].isAdmin);
+    setIsAdmin(user[0]?.isAdmin);
   }, [user])
 
     return !session && !loading ? (
@@ -72,7 +72,7 @@ const AdminPage: NextPage<Props>  = ({ categories, subcategories, words, user })
     ) : (
       <div className="w-screen min-h-screen bg-green-100 flex flex-col relative font-poppins">
       <header className="w-full flex justify-center items-center relative">
-        <p className="py-2">Admin Panel, {user[0].name}</p>
+        <p className="py-2">Admin Panel, {user[0]?.name}</p>
         <button className="absolute top-0 right-0 flex justify-center m-2 w-6 h-6 bg-white rounded-sm items-center" onClick={() => signOut()}>
           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" /></svg>
         </button>
