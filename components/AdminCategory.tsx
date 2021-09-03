@@ -9,18 +9,21 @@ import type { SubcategoryType } from 'types';
 interface Props {
   category: string;
   subcategories: SubcategoryType[];
+  userMail: string;
   isAdmin: boolean;
 }
 
-const AdminCategory: FC<Props> = ({ category, subcategories, isAdmin }) => {
+const AdminCategory: FC<Props> = ({ category, subcategories, userMail, isAdmin }) => {
   const words = useAppSelector(adminWords);
   const [active, setActive] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   const selectCategory = (subcategory: string, subId: string, link: 'add' | 'edit') => {
+    const addBy = userMail;
+    const createdAt = Date.now();
     if (isAdmin) {
-      dispatch(setCategory({ category, subcategory, subId }));
+      dispatch(setCategory({ category, subcategory, subId, addBy, createdAt }));
       if (link === 'add') {
         router.push('/admin/add');
       }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import type { GetServerSideProps } from 'next';
+import type { NextPage, GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/client';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import {
@@ -16,6 +16,10 @@ import {
   resetWords
 } from 'redux/slices/adminSlice';
 
+interface Props {
+  user: string;
+}
+
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
   if (!session) {
@@ -28,19 +32,19 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
   return {
     props: {
-      session
+      user: session.user?.email
     }
   };
 };
 
-const AddNewWords = () => {
+const AddNewWords: NextPage<Props> = ({ user }) => {
   const category = useAppSelector(adminCategory);
   const words = useAppSelector(adminNewWords);
   const info = useAppSelector(adminAddInfo);
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [feedback, setFeedback] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const addWords = async () => {
     const response = await fetch('/api/words', {
@@ -55,7 +59,7 @@ const AddNewWords = () => {
       dispatch(setAddInfo('Added correctly'));
       dispatch(resetWords());
       setFeedback(true);
-      setLoading(true);
+      setLoad(true);
       router.push('/admin');
     } else {
       dispatch(setAddInfo('Something went wrong!'));
@@ -63,12 +67,19 @@ const AddNewWords = () => {
     }
   };
 
+  console.log(user, 'session in add');
+  const addNewValue = () => {
+    const date = Date.now();
+    console.log(date, user, 'new Value');
+    dispatch(addWordValue({ addBy: user, createdAt: date }));
+  };
+
   return (
     <div className="w-screen min-h-screen bg-green-100 flex flex-col relative font-poppins">
       <header className="w-full text-center text-sm h-[20px] flex-none mt-2">
         Add to {category.category} - {category.subcategory}
       </header>
-      {loading ? (
+      {load ? (
         <main className="w-full">
           <section className="w-full flex justify-center items-center mt-2">Saving...</section>
         </main>
@@ -87,7 +98,7 @@ const AddNewWords = () => {
               <button
                 className="w-6 h-6 inline-flex justify-center items-center rounded-full bg-blue-400"
                 disabled={words.length === 20}
-                onClick={() => dispatch(addWordValue())}>
+                onClick={addNewValue}>
                 <span>+</span>
               </button>{' '}
               words
@@ -122,7 +133,7 @@ const AddNewWords = () => {
                   className="p-2 m-2 items-center bg-red-400 text-white outline-none rounded-sm"
                   onClick={() => {
                     dispatch(reset());
-                    setLoading(true);
+                    setLoad(true);
                   }}>
                   CANCEL
                 </button>
@@ -134,7 +145,7 @@ const AddNewWords = () => {
                 <Link href="/admin" passHref>
                   <button
                     className="m-2 inline-flex bg-blue-500 text-white p-2 rounded-sm"
-                    onClick={() => setLoading(true)}>
+                    onClick={() => setLoad(true)}>
                     <svg
                       className="w-6 h-6 mr-1"
                       fill="#FFFFFF"

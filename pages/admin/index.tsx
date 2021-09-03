@@ -51,6 +51,8 @@ const AdminPage: NextPage<Props> = ({ categories, subcategories, words, user }) 
     setIsAdmin(user[0]?.isAdmin);
   }, [user]);
 
+  console.log(session, 'session index');
+
   return !session && !loading ? (
     <div className="w-screen min-h-screen bg-green-100 flex flex-col relative font-poppins">
       <header className="w-full flex justify-center h-6">
@@ -96,6 +98,7 @@ const AdminPage: NextPage<Props> = ({ categories, subcategories, words, user }) 
               key={category.catId}
               category={category.category}
               subcategories={subcategories}
+              userMail={user[0].email}
               isAdmin={isAdmin}
             />
           ))}
