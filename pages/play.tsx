@@ -30,25 +30,27 @@ const Play = () => {
       <header className="w-full text-center text-sm h-[20px] flex-none mt-2">
         {category.category} - {category.subcategory}
       </header>
-      <main className="w-full flex flex-wrap flex-grow justify-center items-center overflow-auto">
-        {start ? (
-          <div className="text-xl mx-2 flex flex-wrap">
-            {showWord.map((item, i) => (
-              <span key={i} className="break-all mr-2">
-                {item}
-              </span>
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col justify-center items-center text-lg">
-            <p>Słowo wylosowane</p>
-            <p>Odwróć telefon za</p>
-            <p className="text-xl">{counter}</p>
-          </div>
-        )}
-      </main>
       <Link href="/questions" passHref>
-        <footer className="w-full h-[100px] bg-white flex-none">
+        <main className="w-full flex flex-wrap flex-grow justify-center items-center overflow-auto cursor-pointer">
+          {start ? (
+            <div className="text-xl mx-2 flex flex-wrap">
+              {showWord.map((item, i) => (
+                <span key={i} className="break-all mr-2">
+                  {item}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col justify-center items-center text-lg">
+              <p>Słowo wylosowane</p>
+              <p>Odwróć telefon za</p>
+              <p className="text-xl">{counter}</p>
+            </div>
+          )}
+        </main>
+      </Link>
+      <Link href="/questions" passHref>
+        <footer className="w-full h-[100px] bg-white flex-none cursor-pointer">
           <div className="flex w-full h-full justify-center items-center">
             <span className="text-lg">Pytania</span>
           </div>

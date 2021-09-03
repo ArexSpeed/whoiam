@@ -72,12 +72,13 @@ const CategoryBox: FC<Props> = ({ category }) => {
                   } p-1 m-2 bg-primary rounded-full`}>
                   <input
                     type="radio"
+                    className="cursor-pointer"
                     name={category}
                     id={item.subId}
                     value={item.subcategory}
                     onClick={handleSubcategory}
                   />
-                  <label htmlFor={item.subId}>
+                  <label htmlFor={item.subId} className="cursor-pointer">
                     <span className="mx-2">{item.subcategory}</span>
                   </label>
                 </div>
