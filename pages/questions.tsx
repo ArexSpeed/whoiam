@@ -56,6 +56,16 @@ const Questions = () => {
       <main className="w-full flex-grow">
         <section className="m-2">Pytania:</section>
         <section className="w-full flex flex-col max-h-80 overflow-scroll">
+          {questions.length === 0 && (
+            <div className="flex flex-col justify-center items-center m-2 p-2 bg-white rounded-lg shadow-sm">
+              <p>Brak zapisanych pytań</p>{' '}
+              <button
+                className="flex flex-col justify-center items-center p-2 mt-2 bg-green-500 rounded-sm"
+                onClick={handleOpenModal}>
+                Dodaj pytanie
+              </button>
+            </div>
+          )}
           {questions.map((q, i) => (
             <Question key={i} question={q.question} answer={q.answer} />
           ))}

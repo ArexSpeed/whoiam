@@ -1,16 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import type { CategoryPayload, WordsType } from 'types';
+import type { CategoryPayload, WordsApiType } from 'types';
 
-type Word = {
+type NewCategoryAndWord = {
+  category: string;
+  subcategory: string;
+  subId: string;
+  addBy: string;
+  createdAt: number;
+};
+type NewWord = {
   value: string;
   subId: string;
+  addBy: string;
+  createdAt: number;
+};
+
+type NewWordPayload = {
+  addBy: string;
+  createdAt: number;
 };
 
 interface State {
   category: CategoryPayload;
-  words: WordsType[];
-  newWords: Word[];
+  words: WordsApiType[];
+  newWords: NewWord[];
   addInfo: string;
 }
 
@@ -29,20 +43,28 @@ export const adminSlice = createSlice({
   name: 'admin',
   initialState,
   reducers: {
-    setCategory: (state, action: PayloadAction<CategoryPayload>) => {
-      state.category = action.payload;
+    setCategory: (state, action: PayloadAction<NewCategoryAndWord>) => {
+      state.category = {
+        category: action.payload.category,
+        subcategory: action.payload.subcategory,
+        subId: action.payload.subId
+      };
       state.newWords.push({
         value: '',
-        subId: state.category.subId
+        subId: state.category.subId,
+        addBy: action.payload.addBy,
+        createdAt: action.payload.createdAt
       });
     },
-    setWords: (state, action: PayloadAction<WordsType[]>) => {
+    setWords: (state, action: PayloadAction<WordsApiType[]>) => {
       state.words = action.payload;
     },
-    addWordValue: (state) => {
+    addWordValue: (state, action: PayloadAction<NewWordPayload>) => {
       state.newWords.push({
         value: '',
-        subId: state.category.subId
+        subId: state.category.subId,
+        addBy: action.payload.addBy,
+        createdAt: action.payload.createdAt
       });
     },
     removeWordValue: (state) => {

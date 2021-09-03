@@ -15,7 +15,10 @@ export type CategoryPayload = {
   subId: string;
 };
 
-export type WordsType = {
+export type WordsApiType = {
+  _id: string;
   subId: string;
   value: string;
+  addBy: string;
+  createdAt: number;
 };
