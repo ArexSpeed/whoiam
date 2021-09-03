@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import type { CategoryPayload, WordsType } from 'types';
+import type { CategoryPayload, WordsApiType } from 'types';
 
 type NewCategoryAndWord = {
   category: string;
@@ -23,7 +23,7 @@ type NewWordPayload = {
 
 interface State {
   category: CategoryPayload;
-  words: WordsType[];
+  words: WordsApiType[];
   newWords: NewWord[];
   addInfo: string;
 }
@@ -56,7 +56,7 @@ export const adminSlice = createSlice({
         createdAt: action.payload.createdAt
       });
     },
-    setWords: (state, action: PayloadAction<WordsType[]>) => {
+    setWords: (state, action: PayloadAction<WordsApiType[]>) => {
       state.words = action.payload;
     },
     addWordValue: (state, action: PayloadAction<NewWordPayload>) => {

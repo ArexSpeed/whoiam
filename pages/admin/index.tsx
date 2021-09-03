@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 import { useSession, signOut, getSession } from 'next-auth/client';
-import type { CategoryType, SubcategoryType, WordsType } from 'types';
+import type { CategoryType, SubcategoryType, WordsApiType } from 'types';
 import AdminCategory from 'components/AdminCategory';
 import { getCategories, getSubcategories, getUser, getWords } from 'services/getData';
 import { useAppDispatch } from 'redux/hooks';
@@ -17,7 +17,7 @@ type User = {
 interface Props {
   categories: CategoryType[];
   subcategories: SubcategoryType[];
-  words: WordsType[];
+  words: WordsApiType[];
   user: User[];
 }
 
@@ -50,8 +50,6 @@ const AdminPage: NextPage<Props> = ({ categories, subcategories, words, user }) 
   useEffect(() => {
     setIsAdmin(user[0]?.isAdmin);
   }, [user]);
-
-  console.log(session, 'session index');
 
   return !session && !loading ? (
     <div className="w-screen min-h-screen bg-green-100 flex flex-col relative font-poppins">
@@ -98,7 +96,7 @@ const AdminPage: NextPage<Props> = ({ categories, subcategories, words, user }) 
               key={category.catId}
               category={category.category}
               subcategories={subcategories}
-              userMail={user[0].email}
+              userName={user[0].name}
               isAdmin={isAdmin}
             />
           ))}

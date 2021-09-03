@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
   return {
     props: {
-      user: session.user?.email
+      user: session.user?.name
     }
   };
 };
@@ -67,7 +67,6 @@ const AddNewWords: NextPage<Props> = ({ user }) => {
     }
   };
 
-  console.log(user, 'session in add');
   const addNewValue = () => {
     const date = Date.now();
     console.log(date, user, 'new Value');
