@@ -85,6 +85,16 @@ const CategoryBox: FC<Props> = ({ category }) => {
               ))}
           </section>
           <section>
+            {subcategory &&
+              subcategories
+                .filter((sub) => sub.category === category && sub.subcategory === subcategory)
+                .map((item, i) => (
+                  <p key={i} className="text-xs">
+                    <i>Przykład:</i> {item.example[0]}, {item.example[1]}, {item.example[2]}
+                  </p>
+                ))}
+          </section>
+          <section>
             <button className="p-2 m-2 bg-green-500 rounded-md" onClick={handleStart}>
               {start}
             </button>
