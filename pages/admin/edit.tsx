@@ -1,7 +1,8 @@
+/* eslint-disable jsx-a11y/no-onchange */
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useAppSelector } from 'redux/hooks';
-import { adminCategory } from 'redux/slices/adminSlice';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import { adminCategory, adminSortValue, changeSortValue } from 'redux/slices/adminSlice';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import type { GetServerSideProps } from 'next';
@@ -38,8 +39,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 };
 
 const EditPage = () => {
+  const dispatch = useAppDispatch();
   const category = useAppSelector(adminCategory);
-  const [words, setWords] = useState<WordsApiType[]>([]);
+  const sortValue = useAppSelector(adminSortValue);
+  const [wordsFromApi, setWordsFromApi] = useState<WordsApiType[]>([]);
+  const [orderedWords, setOrderedWords] = useState<WordsApiType[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const classes = useStyles();
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -60,11 +64,40 @@ const EditPage = () => {
           'Content-Type': 'application/json'
         }
       }).then((response) => response.json());
-      setWords(data);
+      setWordsFromApi(data);
       setIsLoaded(true);
     })();
     return setIsUpdated(false);
   }, [isUpdated, category]);
+
+  //Sorting
+  useEffect(() => {
+    const order = orderBy(wordsFromApi, sortValue);
+    setOrderedWords(order);
+  }, [wordsFromApi, sortValue]);
+
+  const orderBy = (array: WordsApiType[], sortBy: string): WordsApiType[] => {
+    if (sortBy === 'dateAsc') {
+      return [...array].sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1));
+    }
+    if (sortBy === 'dateDesc') {
+      return [...array].sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+    }
+    if (sortBy === 'nameAsc') {
+      return [...array].sort((a, b) => (a.value > b.value ? 1 : -1));
+    }
+    if (sortBy === 'nameDesc') {
+      return [...array].sort((a, b) => (a.value > b.value ? -1 : 1));
+    }
+    if (sortBy === 'userAsc') {
+      return [...array].sort((a, b) => (a.addBy > b.addBy ? 1 : -1));
+    }
+    if (sortBy === 'userDesc') {
+      return [...array].sort((a, b) => (a.addBy > b.addBy ? -1 : 1));
+    }
+
+    return array;
+  };
 
   // Modals
   const handleOpenModal = (modal: ModalType) => {
@@ -183,10 +216,21 @@ const EditPage = () => {
             <div>
               <p className="text-md">
                 {category.category} - {category.subcategory}{' '}
-                <span className="text-xs">({words?.length})</span>
+                <span className="text-xs">({wordsFromApi?.length})</span>
               </p>
             </div>
             <div className="flex flex-row justify-center items-center">
+              <div className="inline-flex items-center">
+                <p className="text-xs mr-2">Order by:</p>
+                <select onChange={(e) => dispatch(changeSortValue(e.target.value))}>
+                  <option value="dateAsc">Date (asc)</option>
+                  <option value="dateDesc">Date (desc)</option>
+                  <option value="nameAsc">Name (asc)</option>
+                  <option value="nameDesc">Name (desc)</option>
+                  <option value="userAsc">User (asc)</option>
+                  <option value="userDesc">User (desc)</option>
+                </select>
+              </div>
               <button className="ml-2" onClick={() => setOpenInfo(!openInfo)}>
                 <svg
                   className="w-6 h-6"
@@ -203,7 +247,7 @@ const EditPage = () => {
             </div>
           </div>
           {isLoaded ? (
-            words?.map((item, i) => (
+            orderedWords?.map((item, i) => (
               <div
                 key={i}
                 className="flex flex-col w-full border-b-2 border-blue-500 border-opacity-20">

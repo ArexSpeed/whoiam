@@ -73,8 +73,9 @@ const AdminPage: NextPage<Props> = ({ categories, subcategories, words, user }) 
       <header className="w-full flex justify-center items-center relative">
         <p className="py-2">Admin Panel, {user[0]?.name}</p>
         <button
-          className="absolute top-0 right-0 flex justify-center m-2 w-6 h-6 bg-white rounded-sm items-center"
+          className="absolute top-0 right-0 flex justify-center m-2 p-1 bg-white rounded-sm items-center"
           onClick={() => signOut()}>
+          <span className="text-xs mx-1">Logout</span>
           <svg
             className="w-4 h-4"
             fill="currentColor"

@@ -26,6 +26,7 @@ interface State {
   words: WordsApiType[];
   newWords: NewWord[];
   addInfo: string;
+  sortValue: string;
 }
 
 const initialState: State = {
@@ -36,7 +37,8 @@ const initialState: State = {
   },
   words: [],
   newWords: [],
-  addInfo: ''
+  addInfo: '',
+  sortValue: 'dateAsc'
 };
 
 export const adminSlice = createSlice({
@@ -76,6 +78,9 @@ export const adminSlice = createSlice({
     setAddInfo: (state, action: PayloadAction<string>) => {
       state.addInfo = action.payload;
     },
+    changeSortValue: (state, action) => {
+      state.sortValue = action.payload;
+    },
     reset: (state) => {
       state.category = {
         category: '',
@@ -84,6 +89,7 @@ export const adminSlice = createSlice({
       };
       state.newWords = [];
       state.addInfo = '';
+      state.sortValue = 'dateAsc';
     },
     resetWords: (state) => {
       state.newWords = [];
@@ -92,11 +98,12 @@ export const adminSlice = createSlice({
 });
 
 // eslint-disable-next-line prettier/prettier
-export const { setCategory, setWords, addWordValue, removeWordValue, changeWordValue, setAddInfo, reset, resetWords } = adminSlice.actions;
+export const { setCategory, setWords, addWordValue, removeWordValue, changeWordValue, setAddInfo, changeSortValue, reset, resetWords } = adminSlice.actions;
 
 export const adminCategory = (state: RootState) => state.admin.category;
 export const adminWords = (state: RootState) => state.admin.words;
 export const adminNewWords = (state: RootState) => state.admin.newWords;
 export const adminAddInfo = (state: RootState) => state.admin.addInfo;
+export const adminSortValue = (state: RootState) => state.admin.sortValue;
 
 export default adminSlice.reducer;
