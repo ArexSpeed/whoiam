@@ -7,6 +7,7 @@ export type SubcategoryType = {
   subId: string;
   category: string;
   subcategory: string;
+  example: string[];
 };
 
 export type CategoryPayload = {
