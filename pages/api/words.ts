@@ -12,13 +12,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       if (query.subId) {
         const subId = query.subId;
         const data = await db.collection('words').find({ subId: subId }).sort({ _id: 1 }).toArray();
-        res.json(data);
         closeConnection();
+        res.json(data);
         break;
       } else {
         const data = await db.collection('words').find().sort({ _id: 1 }).toArray();
-        res.json(data);
         closeConnection();
+        res.json(data);
         break;
       }
     }
@@ -70,6 +70,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const id = new ObjectId(req.query.id.toString());
         const filter = { _id: id };
         const words = await db.collection('words').deleteOne(filter);
+        closeConnection();
         res.status(201).json({ status: 'Edit correctlty', words });
       } catch (error) {
         res.status(422).json({ status: 'not_created', error });

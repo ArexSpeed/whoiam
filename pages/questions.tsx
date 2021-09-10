@@ -5,6 +5,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setQuestion, selectedQuestions, selectedCategory, reset } from 'redux/slices/gameSlice';
+import MetaHead from 'components/MetaHead';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -50,6 +51,7 @@ const Questions = () => {
 
   return (
     <div className="w-screen h-screen min-h-screen bg-primary flex flex-col relative font-poppins overflow-hidden">
+      <MetaHead />
       <header className="w-full text-center text-sm h-[20px] flex-none mt-2">
         {category.category} - {category.subcategory}
       </header>
