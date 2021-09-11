@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAppSelector } from 'redux/hooks';
 import { selectedCategory, selectedWord } from 'redux/slices/gameSlice';
+import MetaHead from 'components/MetaHead';
 
 const Play = () => {
   const category = useAppSelector(selectedCategory);
@@ -27,6 +28,7 @@ const Play = () => {
 
   return (
     <div className="w-screen h-screen min-h-screen bg-primary flex flex-col relative font-poppins overflow-hidden">
+      <MetaHead />
       <header className="w-full text-center text-sm h-[20px] flex-none mt-2">
         {category.category} - {category.subcategory}
       </header>

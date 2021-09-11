@@ -6,6 +6,7 @@ import Link from 'next/link';
 import type { CategoryType, SubcategoryType } from 'types';
 import { getCategories, getSubcategories } from 'services/getData';
 import { setSubcategories } from 'redux/slices/gameSlice';
+import MetaHead from 'components/MetaHead';
 
 interface Props {
   categories: CategoryType[];
@@ -30,11 +31,13 @@ const Home: NextPage<Props> = ({ categories, subcategories }) => {
     dispatch(setSubcategories(subcategories));
   }, [subcategories, dispatch]);
   return (
-    <div className="w-screen h-screen min-h-screen bg-primary flex flex-col relative font-poppins">
-      <header className="w-full flex justify-end">
+    <div className="w-screen min-h-screen bg-primary flex flex-col relative font-poppins">
+      <MetaHead />
+      <header className="w-full flex justify-center items-center relative">
+        <p className="py-2 mt-2">Zgadnij kim jesteś? - Gra</p>
         <Link href="/rules" passHref>
-          <button className="flex justify-center m-2 w-6 h-6 bg-white rounded-sm items-center">
-            ?
+          <button className="absolute top-0 right-0 flex justify-center m-2 p-1 bg-white rounded-sm items-center">
+            Zasady
           </button>
         </Link>
       </header>

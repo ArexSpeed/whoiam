@@ -1,7 +1,9 @@
+import MetaHead from 'components/MetaHead';
 import Link from 'next/link';
 
 const RulesPage = () => (
   <div className="w-screen min-h-screen bg-primary flex flex-col relative font-poppins">
+    <MetaHead />
     <header className="w-full flex justify-center items-center relative">
       <Link href="/" passHref>
         <button className="absolute top-0 left-0 m-2 inline-flex bg-blue-500 text-white p-1 rounded-sm">
