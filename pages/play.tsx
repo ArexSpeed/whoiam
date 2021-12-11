@@ -3,14 +3,15 @@ import Link from 'next/link';
 import { useAppSelector } from 'redux/hooks';
 import { selectedCategory, selectedWord } from 'redux/slices/gameSlice';
 import MetaHead from 'components/MetaHead';
+import { useNoSleep } from 'use-no-sleep';
 
 const Play = () => {
   const category = useAppSelector(selectedCategory);
   const word = useAppSelector(selectedWord);
   const [start, setStart] = useState(false);
-  const [counter, setCounter] = useState(5);
+  const [counter, setCounter] = useState(3);
   const [showWord, setShowWord] = useState<string[]>([]);
-
+  useNoSleep(true);
   useEffect(() => {
     const interval = setInterval(() => {
       setCounter((prev) => prev - 1);
@@ -18,7 +19,7 @@ const Play = () => {
     setTimeout(() => {
       setStart(true);
       clearInterval(interval);
-    }, 5000);
+    }, 3000);
   }, []);
 
   useEffect(() => {
@@ -27,23 +28,23 @@ const Play = () => {
   }, [word]);
 
   return (
-    <div className="w-screen h-screen min-h-screen bg-primary flex flex-col relative font-poppins overflow-hidden">
+    <div className="relative flex flex-col w-screen h-screen min-h-screen overflow-hidden bg-primary font-poppins">
       <MetaHead />
       <header className="w-full text-center text-sm h-[20px] flex-none mt-2">
         {category.category} - {category.subcategory}
       </header>
       <Link href="/questions" passHref>
-        <main className="w-full flex flex-wrap flex-grow justify-center items-center overflow-auto cursor-pointer">
+        <main className="flex flex-wrap items-center justify-center flex-grow w-full overflow-auto cursor-pointer">
           {start ? (
-            <div className="text-xl mx-2 flex flex-wrap">
+            <div className="flex flex-wrap mx-2 text-xl">
               {showWord.map((item, i) => (
-                <span key={i} className="break-all mr-2">
+                <span key={i} className="mr-2 break-all">
                   {item}
                 </span>
               ))}
             </div>
           ) : (
-            <div className="flex flex-col justify-center items-center text-lg">
+            <div className="flex flex-col items-center justify-center text-lg">
               <p>Słowo wylosowane</p>
               <p>Odwróć telefon za</p>
               <p className="text-xl">{counter}</p>
@@ -53,7 +54,7 @@ const Play = () => {
       </Link>
       <Link href="/questions" passHref>
         <footer className="w-full h-[100px] bg-white flex-none cursor-pointer">
-          <div className="flex w-full h-full justify-center items-center">
+          <div className="flex items-center justify-center w-full h-full">
             <span className="text-lg">Pytania</span>
           </div>
         </footer>
