@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useAppSelector } from 'redux/hooks';
 import { selectedCategory, selectedWord } from 'redux/slices/gameSlice';
 import MetaHead from 'components/MetaHead';
-import { useNoSleep } from 'use-no-sleep';
+import NoSleep from 'lib/nosleep';
 
 const Play = () => {
   const category = useAppSelector(selectedCategory);
@@ -11,9 +11,10 @@ const Play = () => {
   const [start, setStart] = useState(false);
   const [counter, setCounter] = useState(3);
   const [showWord, setShowWord] = useState<string[]>([]);
-
-  useNoSleep(true);
+  const noSleep = new NoSleep();
   useEffect(() => {
+    //device.allowSleeping();
+    noSleep.enabled;
     const interval = setInterval(() => {
       setCounter((prev) => prev - 1);
     }, 1000);
@@ -51,14 +52,12 @@ const Play = () => {
               <p className="text-xl">{counter}</p>
             </div>
           )}
+          <footer className="fixed bottom-0 flex-none w-full h-24 bg-white cursor-pointer">
+            <div className="flex items-center justify-center w-full h-full">
+              <span className="text-lg">Pytania</span>
+            </div>
+          </footer>
         </main>
-      </Link>
-      <Link href="/questions" passHref>
-        <footer className="w-full h-[100px] bg-white flex-none cursor-pointer">
-          <div className="flex items-center justify-center w-full h-full">
-            <span className="text-lg">Pytania</span>
-          </div>
-        </footer>
       </Link>
     </div>
   );
