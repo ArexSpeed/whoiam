@@ -50,19 +50,19 @@ const Questions = () => {
   };
 
   return (
-    <div className="w-screen h-screen min-h-screen bg-primary flex flex-col relative font-poppins overflow-hidden">
+    <div className="relative flex flex-col w-screen h-screen min-h-screen overflow-hidden bg-primary font-poppins">
       <MetaHead />
       <header className="w-full text-center text-sm h-[20px] flex-none mt-2">
         {category.category} - {category.subcategory}
       </header>
-      <main className="w-full flex-grow">
+      <main className="flex-grow w-full pb-24">
         <section className="m-2">Pytania:</section>
-        <section className="w-full flex flex-col max-h-80 overflow-scroll">
+        <section className="flex flex-col w-full overflow-scroll max-h-80">
           {questions.length === 0 && (
-            <div className="flex flex-col justify-center items-center m-2 p-2 bg-white rounded-lg shadow-sm">
+            <div className="flex flex-col items-center justify-center p-2 m-2 bg-white rounded-lg shadow-sm">
               <p>Brak zapisanych pytań</p>{' '}
               <button
-                className="flex flex-col justify-center items-center p-2 mt-2 bg-green-500 rounded-sm"
+                className="flex flex-col items-center justify-center p-2 mt-2 bg-green-500 rounded-sm"
                 onClick={handleOpenModal}>
                 Dodaj pytanie
               </button>
@@ -73,17 +73,17 @@ const Questions = () => {
           ))}
 
           <Modal open={openModal} onClose={handleCloseModal} className={classes.modal}>
-            <div className="flex flex-col justify-around items-center w-full h-auto m-2 p-2 bg-primary text-black rounded-md">
+            <div className="flex flex-col items-center justify-around w-full h-auto p-2 m-2 text-black rounded-md bg-primary">
               <h2>Pytanie</h2>
               <input
                 type="text"
-                className="p-2 m-2 w-full bg-white rounded-sm"
+                className="w-full p-2 m-2 bg-white rounded-sm"
                 placeholder="Napisz pytanie"
                 value={modalQuestion}
                 onChange={(e) => setModalQuestion(e.target.value)}
               />
               <h2>Odpowiedź</h2>
-              <div className="flex flex-row justify-center items-center w-full m-2">
+              <div className="flex flex-row items-center justify-center w-full m-2">
                 <button
                   className={`${
                     modalAnswer === 'Tak' ? 'bg-opacity-100' : 'bg-opacity-50'
@@ -100,7 +100,7 @@ const Questions = () => {
                 </button>
               </div>
               <button
-                className="p-2 m-2 items-center bg-blue-500 text-white outline-none rounded-sm"
+                className="items-center p-2 m-2 text-white bg-blue-500 rounded-sm outline-none"
                 onClick={saveQuestion}>
                 ZAPISZ
               </button>
@@ -108,9 +108,9 @@ const Questions = () => {
           </Modal>
         </section>
       </main>
-      <footer className="flex flex-row w-full h-[100px] justify-between items-center">
+      <footer className="fixed bottom-0 flex flex-row items-center justify-between w-full h-24">
         <Link href="/play" passHref>
-          <button className="bg-transparent flex flex-col justify-center items-center w-1/3">
+          <button className="flex flex-col items-center justify-center w-1/3 bg-transparent">
             <div className="flex justify-center items-center w-[50px] h-[50px] rounded-full bg-blue-500">
               <svg
                 className="w-8 h-8"
@@ -128,7 +128,7 @@ const Questions = () => {
           </button>
         </Link>
         <button
-          className="bg-transparent flex flex-col justify-center items-center w-1/3"
+          className="flex flex-col items-center justify-center w-1/3 bg-transparent"
           onClick={handleOpenModal}>
           <div className="flex justify-center items-center w-[50px] h-[50px] rounded-full bg-green-500">
             <svg
@@ -147,7 +147,7 @@ const Questions = () => {
         </button>
         <Link href="/" passHref>
           <button
-            className="bg-transparent flex flex-col justify-center items-center w-1/3"
+            className="flex flex-col items-center justify-center w-1/3 bg-transparent"
             onClick={handleReset}>
             <div className="flex justify-center items-center w-[50px] h-[50px] rounded-full bg-red-400">
               <svg
